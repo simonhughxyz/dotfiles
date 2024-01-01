@@ -1,0 +1,72 @@
+auto-reload yes               # Auto reload on startup.
+reload-threads 100            # Number of threads to reload in parallel.
+reload-time 60                # Number of minutes between reload.
+download-full-page yes        # Download full page if available.
+keep-articles-days 0          # Keep articles forever.
+max-items 0                   # Keep all articles.
+external-url-viewer "urlscan" # Use 'urlscan'.
+save-path "~/Documents/notes/articles"        # Path to save articles to.
+text-width 80                 # Max text width.
+browser "$BROWSER %u >/dev/null 2>&1 &"         # Set default browser.
+scrolloff 5                   # Number of lines to keep at edge when scrolling
+prepopulate-query-feeds yes   # Prepopulate query feeds on startup
+confirm-exit yes              # Confirm exit before quitting newsboat
+error-log "~/.local/share/newsboat/error.log"
+
+# Format
+datetime-format "%d %b %y"
+
+# colors
+
+color listnormal color106 default
+color listfocus white color22 bold
+color listnormal_unread yellow default
+color listfocus_unread white color22 bold
+color info red black bold
+color article color214 default
+color background default default
+
+# highlight
+highlight feedlist "--- .* -*$" color5 default bold
+highlight all "https?://[^ ]+" color6 default bold
+highlight article "^(Feed|Title|Author|Link|Date):" color10 default
+highlight article "\\[[0-9]+\\]" color13 default
+
+# Key Bindings
+
+bind-key j down
+bind-key k up
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key G end
+bind-key g home
+bind-key d pagedown
+bind-key u pageup
+bind-key l open
+bind-key RIGHT open
+bind-key h quit
+bind-key LEFT quit
+bind-key a toggle-article-read
+bind-key n next-unread
+bind-key N prev-unread
+bind-key o open-in-browser-and-mark-read
+bind-key D pb-download
+bind-key U show-urls
+bind-key x pb-delete
+bind-key ^t next-unread
+bind-key s sort
+bind-key S save
+bind-key r reload-all
+bind-key R toggle-show-read-feeds
+bind-key ESC quit
+unbind-key SPACE
+bind-key SPACE macro-prefix
+
+# macros
+macro v set browser "vid -d --file='%u'"; open-in-browser-and-mark-read ; set browser "$BROWSER %u"
+macro d set browser "setsid -f ytdl '%u' >/dev/null 2>&1"; open-in-browser-and-mark-read ; set browser "$BROWSER %u"
+macro o set browser "firefox %u"; open-in-browser-noninteractively; toggle-article-read ; set browser "$BROWSER %u"
+macro r set browser "foot rdrview -B w3m %u"; open-in-browser-noninteractively; toggle-article-read ; set browser "$BROWSER %u"
+macro i set browser "curl '%u' > /tmp/img.tmp"; one; set browser "setsid sxiv /tmp/img.tmp >/dev/null 2>&1 &"; open-in-browser-and-mark-read; set browser "$BROWSER %u"
