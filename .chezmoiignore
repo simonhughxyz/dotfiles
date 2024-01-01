@@ -1,4 +1,21 @@
+# .chezmoiignore
+# Simon H Moore <simon@simonhugh.xyz>
+
+# Ignore when linux
+{{- if and (eq .chezmoi.os "linux") (not .is_wsl) }}
+AppData/
+{{- end }}
+
+# Ignore when WSL
 {{- if .is_wsl }}
 .vieb/
 .config/mpv/
+{{- end }}
+
+
+# Ignore when windows
+{{- if eq .chezmoi.os "windows" }}
+.config/
+.profile
+.zprofile
 {{- end }}
