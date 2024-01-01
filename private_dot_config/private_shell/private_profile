@@ -60,7 +60,7 @@ export LS_COLORS='rs=0:di=0;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;3
 export EXA_GRID_ROWD=2
 
 # Program settings
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export ZDOTDIR="$XDG_CONFIG_HOME/shell"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
