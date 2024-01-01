@@ -2,14 +2,15 @@
 # Simon H Moore <simon@simonhugh.xyz>
 
 # Ignore when linux
-{{- if and (eq .chezmoi.os "linux") (not .is_wsl) }}
+{{- if and (eq .chezmoi.os "linux") }}
 AppData/
-{{- end }}
 
 # Ignore when WSL
 {{- if .is_wsl }}
 .vieb/
 .config/mpv/
+
+{{- end }}
 {{- end }}
 
 
