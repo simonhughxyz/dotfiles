@@ -1,0 +1,136 @@
+# ==================== Basic Settings ====================================
+set sixel       true
+set ifs         "\n"
+set hiddenfiles ".*"
+set ratios      '2:1'
+set scrolloff   8
+set findlen     1
+set incsearch
+set incfilter
+set tabstop     4
+set wrapscroll
+set cleaner '~/.config/lf/cleaner'
+set previewer '~/.config/lf/previewer'
+set period      3
+set promptfmt "\033[33;1m%F>\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
+set mouse
+
+# ==================== Commands ==========================================
+cmd q   quit    # quality of life cmd
+cmd trash $trash-put $fx
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+cmd touch $touch "$(echo $* | tr ' ' '\ ')"
+cmd setbg $xwallpaper --zoom $f
+cmd select-all :unselect; invert
+cmd batch-rename $printf '%s\n' $fs | vidir
+cmd trash-restore $trash-restore
+cmd trash-fzf $trash-fzf
+cmd detail-mode :set info 'size:time:atime:ctime'
+
+cmd toggle-preview ${{
+    if $lf_preview; then
+        lf -remote "send $id set nopreview"
+        lf -remote "send $id set ratios '1'"
+        lf -remote "send $id \$echo"    # to fix ueberzug image not being removed
+    else
+        lf -remote "send $id set ratios '2:1'"
+        lf -remote "send $id set preview"
+        lf -remote "send $id redraw"
+    fi
+}}
+cmd moveto ${{
+    prev_dir="$( printf "$PWD" | sed 's|[^/]*$||' )"
+    dest="$( find ~/ "$prev_dir" -maxdepth 8 -type d 2> /dev/null | fzf --filepath-word --query="$PWD" )"
+    for x in $fx; do
+        start="$( date '+%s' )"
+        mv -iv "$x" "$dest"
+        end="$( date '+%s' )"
+        duration="$(( "$end" - "$start" ))"
+        [ "$duration" -gt 1 ] && notify-send "File Moved!" "$x > $dest"
+    done
+}}
+cmd copyto ${{
+    prev_dir="$( printf "$PWD" | sed 's|[^/]*$||' )"
+    dest="$( find ~/ "$prev_dir" -maxdepth 8 -type d 2> /dev/null | fzf --filepath-word --query="$PWD" )"
+    for x in $fx; do
+        start="$( date '+%s' )"
+        cp -ivr "$x" "$dest"
+        end="$( date '+%s' )"
+        duration="$(( "$end" - "$start" ))"
+        notify-send "lol"
+    done
+}}
+cmd size !{{
+    w="$( tput cols )"
+    sep="$( printf '=%.0s' $( seq 1 "$w" ) )"
+    du -hc $fx | sed "s|${PWD}/||;\$i${sep}"
+}}
+
+# ==================== Command Bindings ==================================
+cmap <up> cmd-history-prev
+cmap <down> cmd-history-next
+
+# ==================== Mouse Bindings ====================================
+map <m-1> open
+map <m-2> updir
+map <m-3> updir
+map <m-up> up
+map <m-down> down
+
+# ==================== Navigation ========================================
+
+# Shortcuts
+map ~ cd ~/
+map \#h :cd ~/
+map \#r :cd /
+map \#D :cd ~/Documents/
+map \#d :cd ~/Downloads/
+map \#v :cd ~/Videos/
+map \#m :cd ~/Music/
+map \#p :cd ~/Pictures/
+map \#n :cd ~/Documents/notes/
+map \#P :cd ~/Projects/
+map \#f :cd ~/Videos/film
+map \#t :cd ~/Videos/tv
+
+# ==================== Normal Bindings ===================================
+map . :set hidden!
+map X trash
+map gd push :mkdir<space>
+map gt push :touch<space>
+map gf filter
+map gF setfilter
+map a :select-all
+map P :toggle-preview
+map C :select-all; calcdirsize; unselect
+map T :trash-fzf
+# renaming files
+map gn push A<c-u> # new rename
+map A rename # at the very end
+map I push A<c-a> # at the very beginning
+map gi push A<a-b><a-b><a-f> # before extention
+map ga push A<a-b> # after extention
+map R :batch-rename
+# set info bindings
+map i
+map ii :set info
+map ia :set info atime
+map ic :set info ctime
+map it :set info time
+map is :set info size
+# explicit sort bindings
+map sa :set sortby atime; set reverse; set info atime
+map sA :set sortby atime; set noreverse; set info atime
+map sc :set sortby ctime; set reverse; set info ctime
+map sC :set sortby ctime; set noreverse; set info ctime
+map se :set sortby ext; set reverse; set info
+map sE :set sortby ext; set noreverse; set info
+map sn :set sortby natural; set reverse; set info
+map sN :set sortby natural; set noreverse; set info
+map ss :set sortby size; set reverse; set info size
+map sS :set sortby size; set noreverse; set info size
+map st :set sortby time; set reverse; set info time
+map sT :set sortby time; set noreverse; set info time
+
+# Shortcuts
+# map S :select-all; calcdirsize; unselect; set sortby size; set reverse; set info size
