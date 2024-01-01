@@ -1,0 +1,33 @@
+# Options
+set font "monospace normal 16"
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+set adjust-open best-fit
+set recolor true
+set window-title-home-tilde true
+set statusbar-home-tilde true
+
+# Navigation Bindings
+map g goto top
+map <Return> goto top
+map <S-Up> navigate previous
+map <S-Down> navigate next
+map u scroll half-up
+map d scroll half-down
+map { scroll half-up
+map } scroll half-down
+map m mark_add
+map \' mark_evaluate
+map \` mark_evaluate
+
+map D toggle_page_mode
+map r reload
+map R rotate
+map K page up
+map J page down
+map i recolor
+map p print
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+map b toggle_statusbar
