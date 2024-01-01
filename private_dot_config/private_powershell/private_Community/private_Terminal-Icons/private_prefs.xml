@@ -1,0 +1,18 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>System.Collections.Hashtable</T>
+      <T>System.Object</T>
+    </TN>
+    <DCT>
+      <En>
+        <S N="Key">CurrentColorTheme</S>
+        <S N="Value">devblackops</S>
+      </En>
+      <En>
+        <S N="Key">CurrentIconTheme</S>
+        <S N="Value">devblackops</S>
+      </En>
+    </DCT>
+  </Obj>
+</Objs>
