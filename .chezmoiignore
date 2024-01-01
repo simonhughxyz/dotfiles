@@ -1,0 +1,6 @@
+{{- if .is_wsl }}
+.config/
+.password-store/
+.profile
+.zprofile
+{{- end }}

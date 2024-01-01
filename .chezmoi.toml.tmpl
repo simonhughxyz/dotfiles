@@ -1,0 +1,6 @@
+{{- $email := promptString "email" -}}
+
+[data]
+    email = "{{ $email }}"
+    name = "Simon H Moore"
+    is_wsl = {{ (.chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$") }}
