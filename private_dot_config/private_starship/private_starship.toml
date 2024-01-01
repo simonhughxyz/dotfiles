@@ -1,0 +1,71 @@
+# Starship prompt config
+#
+# Simon H Moore <simon@simonhugh.xyz>
+#
+# https://starship.rs/
+
+# order of modules to show
+# `\` after module continues next module on same line, without creates new line
+format = """
+$username\
+$hostname\
+$directory\
+$fill\
+$git_branch
+$cmd_duration\
+$status\
+$shell\
+$character"""
+
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+continuation_prompt = '▶▶ '
+
+# don't print new line before prompt
+add_newline = false
+
+# character before command
+[character]
+format = '$symbol '
+
+# fill character between left and right upper prompt
+[fill]
+symbol = " "
+
+# indicator of type of shell (zsh, bash, powershell...)
+[shell]
+disabled = false
+format = '[$indicator]($style)'
+zsh_indicator = 'z'
+bash_indicator = ''
+powershell_indicator = '󰨊'
+cmd_indicator = ''
+
+# show exit code of previous command
+[status]
+disabled = false
+
+# show current user
+[username]
+show_always = false # only show if root or if not login user
+format = '[$user]($style) '
+
+# show machine hostname
+[hostname]
+ssh_only = true # only show if ssh into other machine
+format = '@ [$hostname]($style) / '
+
+# show current directory
+[directory]
+truncation_length = 3 # number of directories to show before truncating
+format = '[$path]($style) [$read_only]($read_only_style) '
+
+# show duration of last command
+[cmd_duration]
+style = 'bold red'
+
+# show git branch if in git repo
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
