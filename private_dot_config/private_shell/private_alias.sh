@@ -27,7 +27,7 @@ alias nftf='sudo nft flush ruleset'
 alias nfts='sudo nft -f /etc/nftables.conf'
 alias vpnu='wg-quick up '
 alias vpnd='wg-quick down '
-alias dot="git --git-dir=$HOME/Projects/dotfiles.git --work-tree=$HOME"
+alias dot="chezmoi"
 
 # program options
 alias mbsync='mbsync -c "$XDG_CONFIG_HOME"/mbsync/mbsyncrc'
