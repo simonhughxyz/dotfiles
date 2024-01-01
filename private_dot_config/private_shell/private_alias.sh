@@ -36,7 +36,7 @@ alias cal='cal -m -3'
 
 # ls
 # alias ls='ls --color=auto --group-directories-first'
-alias ls='exa --icons --group-directories-first'
+alias ls='eza --icons --group-directories-first'
 alias l='ls'
 alias l.='ls -d .*'
 alias l,='ls -a'
