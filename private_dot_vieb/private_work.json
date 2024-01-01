@@ -1,0 +1,13 @@
+{
+    "name": "Erwic",
+    "apps": [
+        {
+            "container": "work",
+            "url": "https://outlook.office.com/mail/"
+        },
+        {
+            "container": "work",
+            "url": "https://teams.microsoft.com/"
+        }
+    ]
+}
