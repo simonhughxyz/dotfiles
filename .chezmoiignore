@@ -1,6 +1,3 @@
 {{- if .is_wsl }}
-.config/
-.password-store/
-.profile
-.zprofile
+.vieb/
 {{- end }}
