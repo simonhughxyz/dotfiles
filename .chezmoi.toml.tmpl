@@ -3,4 +3,4 @@
 [data]
     email = "{{ $email }}"
     name = "Simon H Moore"
-    is_wsl = {{ (.chezmoi.kernel.osrelease | regexMatch "-microsoft-standard$") }}
+    is_wsl = {{ (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
