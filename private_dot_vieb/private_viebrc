@@ -1,0 +1,103 @@
+" vim: ft=vim
+" viebrc
+"
+" Simon H Moore <simon@simonhugh.xyz>
+"
+" https://github.com/Jelmerro/Vieb
+
+" colorscheme in ~/.vieb/colors/custom.css
+colorscheme custom
+
+set windowmaximize=true
+
+" only use homerow keys for follow mode
+set followchars=custom:jkl;fdsagh
+" don't do anything with other keys when in follow mode
+set followfallbackaction=nothing  
+
+set adblocker=update
+
+set vimcommand="nvim-qt"
+
+" darkreader
+set darkreader=true
+set darkreaderbg=#000000
+set darkreaderfg=#ffffff
+set darkreadergrayscale=0
+set darkreadertextstroke=0
+set darkreaderscope=["page", "special"]
+
+set searchengine=https://search.brave.com/search?q=%s
+set searchwords=[["az", "https://www.amazon.co.uk/s?k=%s"], ["gm", "https://www.google.com/maps/search/%s"], ["ddg", "https://duckduckgo.com/?q=%s"], ["sx", "https://searx.tiekoetter.com/search?q=%s"], ["b", "https://search.brave.com/search?q=%s"], ["yt", "https://www.youtube.com/results?search_query=%s"], ["gh", "https://github.com/search?q=%s&type=repositories"], ["pb", "https://thepiratebay.org/search.php?q=%s"], ["in", "https://yewtu.be/search?q=%s"]]
+
+
+" redirect youtube to invidious
+
+command! redirect <:set redirects+='["^https?://(www\\.)?youtube\\.com(/.*)?~https://yewtu.be$2", "^https?://(www\\.)?youtube\\.com/(.*)?search_query(=.*)?~https://yewtu.be/search?q$3"]'>
+command! noredirect <:set redirects-='["^https?://(www\\.)?youtube\\.com(/.*)?~https://yewtu.be$2", "^https?://(www\\.)?youtube\\.com/(.*)?search_query(=.*)?~https://yewtu.be/search?q$3"]'>
+redirect
+
+set mapsuggestposition=bottomright
+
+set splitbelow=true
+set splitright=true
+
+set guihidetimeout=3000
+set guitabbar=onupdate
+nnoremap <tab> <:set guitabbar=always>
+nnoremap <s-tab> <:set guitabbar=never><:set guitabbar=onupdate>
+
+
+command! addfavourite <:set favoritepages+=<useCurrentUrl>>
+command! removefavourite <:set favoritepages-=<useCurrentUrl>>
+
+" Container settings
+set containernewtab=main
+command! temp <:set containernewtab=temp%n><:tabnew><:set containernewtab=s:usecurrent>
+command! main <:set containernewtab=main><:tabnew><:set containernewtab=s:usecurrent>
+command! acc <:set containernewtab=acc><:tabnew><:set containernewtab=s:usecurrent>
+command! accClone <:set containernewtab=acc><action.openNewTabWithCurrentUrl><:set containernewtab=s:usecurrent>
+command! work <:set containernewtab=work><:tabnew><:set containernewtab=s:usecurrent>
+command! dad <:set containernewtab=dad><:tabnew><:set containernewtab=s:usecurrent>
+command! mum <:set containernewtab=mum><:tabnew><:set containernewtab=s:usecurrent>
+command! xxx <:set containernewtab=xxx><:tabnew><:set containernewtab=s:usecurrent>
+
+set containercolors=
+set containercolors+=^main$~#ffffff
+set containercolors+=^acc$~#ff00ff
+set containercolors+=^temp.*$~#ffff00
+set containercolors+=^work$~#ff0000
+set containercolors+=^dad$~#00ff00
+set containercolors+=^mum$~#ff0099
+
+unmap x
+nnoremap x <pointer.start><action.startFollowCurrentTab>
+pmap <space>v <:set externalcommand=mpv><p.externalLink>
+pmap <space>d <:set externalcommand=ytdl><p.externalLink>
+pnoremap <space>t <:set externalcommand="transmission-remote --add"><p.externalLink>
+pnoremap <space>b <:set externalcommand=brave><p.externalLink>
+nnoremap <space>v <:set externalcommand=mpv><action.openLinkExternal>
+nnoremap <space>d <:set externalcommand=ytdl><action.openLinkExternal>
+nnoremap <space>t <:set externalcommand="transmission-remote --add"><action.openLinkExternal>
+nnoremap <space>b <:set externalcommand=brave><action.openLinkExternal>
+
+nnoremap gt <:set tabnewposition=end><:tabnew><:set tabnewposition=right>
+nnoremap gT <:set tabnewposition=start><:tabnew><:set tabnewposition=right>
+
+" open command mode with buffer search
+nnoremap b <action.toCommandMode>b< >
+
+nnoremap <C-h> <toLeftSplitWindow>
+nnoremap <C-l> <toRightSplitWindow>
+nnoremap <C-k> <toTopSplitWindow>
+nnoremap <C-j> <toBottomSplitWindow>
+
+nnoremap <C-H> <leftHalfSplitWindow>
+nnoremap <C-L> <rightHalfSplitWindow>
+nnoremap <C-K> <topHalfSplitWindow>
+nnoremap <C-J> <bottomHalfSplitWindow>
+
+nmap <C-Up> <increaseHeightSplitWindow>
+nmap <C-Down> <decreaseHeightSplitWindow>
+nmap <C-Right> <increaseWidthSplitWindow>
+nmap <C-Left> <decreaseWidthSplitWindow>
