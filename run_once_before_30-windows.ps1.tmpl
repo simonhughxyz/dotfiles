@@ -1,0 +1,27 @@
+{{- if eq .chezmoi.os "windows" -}}
+# vim: ft=ps1
+
+$Modules = @(
+  "PSWindowsUpdate",
+  "PSFzf",
+  "Terminal-Icons"
+)
+
+$winget = @(
+  "cURL.cURL",
+  "Jelmerro.Vieb",
+  "Starship.Starship",
+  "Mozilla.Firefox",
+  "Brave.Brave"
+)
+
+
+$Modules | ForEach-Object { Install-Module -Name $_ -Force }
+
+Install-WindowsUpdate -AcceptAll
+
+if (Get-Command "winget.exe" -ErrorAction SilentlyContinue){
+  $winget | ForEach-Object { winget.exe install -e --id $_}
+}
+
+{{- end -}}
