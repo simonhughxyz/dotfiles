@@ -55,7 +55,10 @@ sudo zypper install \
     zathura-plugin-pdf-mupdf \
     zathura-plugin-ps
 
-
 {{- end -}}
+
+printf "%s\n" "Setting ZDOTDIR..."
+echo "ZDOTDIR=${XDG_CONFIG_HOME}/shell" | sudo tee -a /etc/zshenv
+
 {{- end -}}
 {{- end -}}
