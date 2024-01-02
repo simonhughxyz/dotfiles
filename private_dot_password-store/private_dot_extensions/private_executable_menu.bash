@@ -23,7 +23,7 @@ files="$( find * -type f | sed 's/\.gpg$//' )"
 lastpasswords="$( tac "$LASTPASS" 2>/dev/null | awk NF | awk '!x[$0]++' | head -n "$HISTORY" )"
 
 # get password choice
-choice="$( printf "%s\%s" "$lastpasswords" "$files" | fzf )"
+choice="$( printf "%s\n%s" "$lastpasswords" "$files" | fzf )"
 
 # seperate key from password file
 key="$( printf "%s" "$choice" | sed -n '1p' )"
