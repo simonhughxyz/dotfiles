@@ -1,6 +1,9 @@
 {{- if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 # vim: ft=sh
+
+export XDG_CONFIG_HOME="${HOME}/.config"
+
 {{ if eq .chezmoi.osRelease.id "void" -}}
 # void specific code
 
