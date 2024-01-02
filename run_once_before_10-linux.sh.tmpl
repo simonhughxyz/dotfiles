@@ -61,7 +61,7 @@ sudo zypper install \
 {{- end -}}
 
 printf "%s\n" "Setting ZDOTDIR..."
-echo "ZDOTDIR=${XDG_CONFIG_HOME}/shell" | sudo tee -a /etc/zshenv
+echo "ZDOTDIR=~/.config/shell" | sudo tee -a /etc/zshenv
 
 {{- end -}}
 {{- end -}}
