@@ -1,0 +1,35 @@
+[user]
+	email = {{ .email }}
+	name = {{ .name }}
+    username = {{ .username }}
+
+
+[diff]
+	tool = vimdiff
+
+[difftool]
+	prompt = false
+
+[alias]
+    s   = status
+    P  = pull
+    p  = push
+    pa = !git remote | xargs -L1 git push
+    paa = !git remote | xargs -L1 git push --all
+    pl  = pull
+    c  = commit
+    a  = commit --amend
+    b   = branch
+    f   = fetch
+    m   = merge
+    o   = checkout
+    ob   = checkout -b
+    om  = checkout master
+    r  = restore
+    sp  = log --all --graph --decorate --oneline --simplify-by-decoration
+    lg  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    d  = diff
+    ds = diff --staged
+
+[credential]
+	helper = cache

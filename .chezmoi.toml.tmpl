@@ -3,6 +3,7 @@
 [data]
     email = "{{ $email }}"
     name = "Simon H Moore"
+    username = "simonhugh"
     {{ if eq .chezmoi.os "linux" }}
         is_wsl = {{ (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
     {{ else }}
