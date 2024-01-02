@@ -43,9 +43,9 @@ set splitbelow=true
 set splitright=true
 
 set guihidetimeout=3000
-set guitabbar=onupdate
+set guitabbar=never
 nnoremap <tab> <:set guitabbar=always>
-nnoremap <s-tab> <:set guitabbar=never><:set guitabbar=onupdate>
+nnoremap <s-tab> <:set guitabbar=never>
 
 
 command! addfavourite <:set favoritepages+=<useCurrentUrl>>
