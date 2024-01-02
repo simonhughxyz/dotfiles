@@ -1,0 +1,61 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+# vim: ft=sh
+{{ if eq .chezmoi.osRelease.id "void" -}}
+# void specific code
+
+printf "%s\n%s\n" "Detected Void Linux" "Installing packages..."
+
+sudo xbps-install -Suv
+sudo xbps-install -S \
+    zsh \
+    curl \
+    wget \
+    neovim \
+    pass \
+    pass-otp \
+    lf \
+    chafa \
+    newsboat \
+    starship \
+    task \
+    trash-cli \
+{{- if not .is_wsl }}
+    mpv \
+    zathura \
+    zathura-pdf-mupdf \
+    zathura-ps
+
+
+{{- end -}}
+{{- end -}}
+{{- if eq .chezmoi.osRelease.id "opensuse-tumbleweed" -}}
+# OpenSuse Tumbleweed specific code
+
+printf "%s\n%s\n" "Detected OpenSuse Tumbleweed Linux" "Installing packages..."
+
+sudo zypper dup
+sudo zypper install \
+    zsh \
+    curl \
+    wget \
+    neovim \
+    password-store \
+    pass-otp \
+    lf \
+    chafa \
+    newsboat \
+    starship \
+    taskwarrior \
+    python311 \
+    python311-pipx \
+{{- if not .is_wsl }}
+    mpv \
+    zathura \
+    zathura-plugin-pdf-mupdf \
+    zathura-plugin-ps
+
+
+{{- end -}}
+{{- end -}}
+{{- end -}}
