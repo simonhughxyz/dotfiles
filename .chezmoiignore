@@ -4,6 +4,7 @@
 # Ignore when linux
 {{- if and (eq .chezmoi.os "linux") }}
 AppData/
+.gitconfig
 
 # Ignore when WSL
 {{- if .is_wsl }}
