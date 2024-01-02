@@ -33,7 +33,10 @@ Note:
 
 # send to clipboard using wl-copy or xclip
 clip(){
-    if [ -n "$WAYLAND_DISPLAY" ]; then
+    if [ -n "$WSL_DISTRO_NAME" ]; then
+      # for wsl on windows
+        win32yank.exe -i --crlf
+    elif [ -n "$WAYLAND_DISPLAY" ]; then
         wl-copy
     else
         xclip
