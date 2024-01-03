@@ -1,6 +1,8 @@
 # .chezmoiignore
 # Simon H Moore <simon@simonhugh.xyz>
 
+.README.md
+
 # Ignore when linux
 {{- if and (eq .chezmoi.os "linux") }}
 AppData/
