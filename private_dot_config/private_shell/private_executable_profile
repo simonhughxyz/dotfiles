@@ -95,7 +95,14 @@ fi
 # /bin/gpg-agent --enable-ssh-support --daemon > /dev/null 2>&1
 /bin/gpg-agent --daemon > /dev/null 2>&1
 # export SSH_AUTH_SOCK=$(/bin/gpgconf --list-dirs agent-ssh-socket)
-eval `ssh-agent`
+
+
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -a "/run/user/$(id -u "$USER")/ssh-agent.socket" > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [ ! -f "$SSH_AUTH_SOCK" ]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
 
 # source alias, mostly needed for dash
 export ENV=$HOME/.config/shell/alias.sh
