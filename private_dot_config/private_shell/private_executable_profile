@@ -1,3 +1,4 @@
+# vim: ft=sh
 # Profile file
 # set environment variables here
 # runs once on login.
