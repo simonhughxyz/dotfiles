@@ -1,0 +1,102 @@
+#!/bin/sh
+# ytdl
+# Simon H Moore <simon@simonhugh.xyz>
+#
+# Download a video or playlist using yt-dlp using task spooler
+# to queue the downloads and view the download history (need
+# corresponding yt-dlp config to save download history).
+
+cmdname="$( basename "$0" )"
+history=~/.local/share/yt-dlp/download.history
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}/${cmdname}"
+
+# Task Spooler
+export TMPDIR="${runtime_dir}/ts"
+mkdir -m 0700 -p $TMPDIR
+ts -S 4
+
+help="Usage: $cmdname [options...] <url>
+    Download a video or playlist using yt-dlp
+    using task spooler to queue the downloads
+
+  OPTIONS:
+     -h, --help                             Show this help text
+     -a, --add <url>                        Add download to task spooler
+     -m, --ts--menu                         Launch ts menu
+     -M, --history-menu                     Launch download history menu
+     -p, --print [option]                   Print a list of tasks or history
+     -c, --count [option]                   Count number of tasks or history
+     -t, --ts [options...]                  Send commands to task spooler
+"
+
+_dependency(){ command -v "$1" > /dev/null || { printf 'error: %s command not found\nplease install the needed dependencies\n' "$1"; exit 1; }; }
+_dependency "yt-dlp"
+_dependency "ts"
+
+_ts_run_cmd(){
+    yt-dlp --newline "${1}" || { notify-send 'Download Failed!' "$(2)"; exit 1; }
+}
+
+_ts_run_cmd_audio(){
+    yt-dlp --newline -f 'bestaudio*' -x --audio-format 'aac' "${1}" || { notify-send 'Download Failed!' "$(2)"; exit 1; }
+}
+
+_ts_add_cmd(){
+    # use yt-dlp to get download info before adding to task spooler
+    yt-dlp \
+        --cookies-from-browser chromium \
+        --no-playlist \
+        --concat-playlist "always" \
+        --flat-playlist \
+        --quiet \
+        --skip-download "${1}" \
+        --exec-before-download "ts -L %(webpage_url_domain)q \
+        ${cmdname} --ts-run-cmd %(webpage_url)q %(title)q; \
+        notify-send -u low 'Add Download to Queue!' %(title)q'\n- <small><i>'%(channel,uploader,creator|unknown)q' ['%(webpage_url_domain)q']</i></small>'"
+}
+
+_ts_fzf_list(){
+    ts -l | sed "1d;s/[[:space:]].*]${cmdname} --ts-run-cmd / /"
+}
+
+_ts_menu(){
+    _ts_fzf_list | \
+            fzf -d' ' --with-nth='3..' --preview='ts -c {1}' \
+            --preview-window='bottom,28%,nowrap,follow' \
+            --bind="alt-q:execute(ts -k {1};ts -r {1}),alt-K:execute(ts -k {1}),alt-r:execute(ts -k {1};ts -r {1};${cmdname} {2};),return:reload(${cmdname} --ts-fzf-list),alt-o:execute($BROWSER {2}),alt-u:execute(ts -u {1}),alt-i:execute(ts -i {1};echo '$sep';read),alt-c:execute(ts -c {1};read),alt-p:execute(printf 'pid: %s' \"\$(ts -p {1})\";read)"
+}
+
+_history_menu(){
+    tac "${history}" \
+    | awk -F'\t\0' '{$8 = substr($8,1,20); \
+        printf "%s\t\0%s\t\0%-15s\t\0%s\t\0%s\t\0%s\t\0%s\t\0%-15s\t\0%s\n", $1, $2, $3, $4, $5, $6, $7, $8, $9}' \
+    | fzf --reverse -d'\t\0' --with-nth='3,8,9..' \
+        --bind="alt-o:execute-silent($BROWSER {2} &),alt-D:execute-silent(${cmdname} {2} &),alt-V:execute-silent(mpv {2})" \
+    | awk -F'\t\0' '{printf "Title: %s\nDate: %s\nURI: %s\nDomain: %s\nPlaylist_id: %s\nVideo length: %s\nSize: %s Kb\nFile: %s\nChannel/Creator: %s\n", $9, $1, $2, $3, $4, $5, $6, $7, $8}'
+}
+
+_print(){
+    case "$1" in
+        r|running) ts -l | awk '$2=="running"';;
+        q|queued) ts -l | awk '$2=="queued"' ;;
+        w|waiting) ts -l | awk '$2=="running" || $2=="queued"' ;;
+        f|finished) ts -l | awk '$2=="finished"' ;;
+        t|tasks) ts -l | sed '1d' ;;
+        h|history) cat "${history}" ;;
+        *) ts -l | awk '$2=="running" || $2=="queued"' ;;
+    esac
+}
+
+case "$1" in
+    --ts-run-cmd) shift; _ts_run_cmd "$@" ;; # not supposed to be run by user
+    --ts-fzf-list) shift; _ts_fzf_list "$@" ;; # not supposed to be run by user
+    -h|--help) printf '%s' "${help}" ;;
+    -a|--add) shift; _ts_add_cmd "$@" ;;
+    -t|--ts) shift; ts "$@" ;;
+    -m|--ts-menu) _ts_menu ;;
+    -M|--history-menu) _history_menu ;;
+    -p|--print) shift; _print "$@" ;;
+    -c|--count) shift; _print "$@" | wc -l ;;
+    -*) printf "%s\n\n%s\n" "Not a valid option!" "${help}"; exit 1;;
+    *) _ts_add_cmd "$@" ;;
+esac
