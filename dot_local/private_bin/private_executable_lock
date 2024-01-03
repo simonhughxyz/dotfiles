@@ -1,0 +1,43 @@
+#!/bin/sh
+# lock
+# Simon H Moore <simon@simonhugh.xyz>
+#
+# Lock the screen
+
+# runtime dir.
+runtime="${XDG_RUNTIME_DIR:-/tmp/lock}"
+# PID file
+pid=$runtime/pid
+
+# xorg
+# command -v /bin/i3lock > /dev/null || { echo "error: i3lock not found"; exit 1; }
+# wayland
+command -v /bin/swaylock > /dev/null || { echo "error: swaylock not found"; exit 1; }
+
+# Script to run on exit
+_cleanup() {
+    rm -f "$pid"
+    exit
+}
+
+# Make sure only one instants of lock is running.
+if [ -f "$pid" ]; then
+    echo "$(basename "$0") is already running, exiting..."
+    exit 1
+else
+    # delete pid file when exiting
+    trap _cleanup EXIT INT HUP TERM
+    # create runtime dir
+    mkdir -m 0700 -p "$runtime"
+    echo $$ > "$pid"
+    chmod 0600 "$pid"
+fi
+
+# Clear cached gpg keys and ssh-keys when locking
+pkill --signal HUP gpg-agent
+ssh-add -D
+
+# xorg
+# /bin/convert -scale 1920x1080 ~/.config/lockscreen.jpg RGB:- | DISPLAY=:0 /bin/i3lock --nofork --raw 1920x1080:rgb --image /dev/stdin
+# wayland
+/bin/swaylock --image ~/.config/lockscreen.jpg
