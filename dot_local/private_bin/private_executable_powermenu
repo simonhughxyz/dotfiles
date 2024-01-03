@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# powermenu
+# Simon H Moore <simon@simonhugh.xyz>
+#
+# Gives a list of options to:
+# hibernate, sleep, exit (kill dwl), shutdown or reboot.
+
+COMPOSITOR="dwl" # name of compositor your using
+
+# List of choices to pass to fzf
+choices="Sleep\nHibernate\nExit\nShutdown\nReboot"
+
+# get choice from fzf
+choice=$(printf "$choices" | fzf --cycle --reverse --info=hidden --border --padding=0 --margin=0 --color='bw,border:1,fg+:1:bold' )
+
+case "$choice" in
+    Sleep) loginctl suspend ;;
+    Hibernate) loginctl hibernate ;;
+    Exit) killall "$COMPOSITOR" ;;
+    Shutdown) loginctl poweroff;;
+    Reboot) loginctl reboot ;;
+esac
