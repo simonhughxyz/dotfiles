@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# trash-fzf
+# Simon Hugh Moore
+#
+# A extra utility to extend trash-cli using fzf
+
+_dependency(){ command -v "$1" > /dev/null || { printf "%s\n" "error: "$1" not found"; exit 1; }; }
+_dependency "fzf"
+_dependency "trash-list"
+
+__usage="usage: $(basename "$0") [OPTIONS]"
+__help="$__usage
+
+trash-fzf
+Manage trashed files useing fzf
+
+Options:
+  -h, --help                         Print this help message
+  <path>                             Use another directory to search trashed files
+
+Keys:
+    return, alt-r                    Restore trashed file
+    alt-p                            Print trashinfo
+    alt-X                            Permanently remove file from trash
+    ctrl-s, ctrl-space               Select file
+
+overittable FZF_DEFAULT_OPTS = --no-sort --tac -i -m --bind='ctrl-s:toggle,ctrl-space:toggle'
+see 'man fzf'"
+
+trash_path=$HOME/.local/share/Trash
+files_path="${trash_path}/files"
+info_path="${trash_path}/info"
+
+_main(){
+    path="${1:-$PWD}/"
+
+    # some options should remain hard coded
+    FZF_DEFAULT_OPTS="--no-sort --tac -i -m --bind='ctrl-s:toggle,ctrl-space:toggle' ${FZF_DEFAULT_OPTS} --expect='return,alt-r,alt-p,alt-X' -q '${path}'"
+    # list trashed files in fzf
+    output="$( trash-list | sed 's| /|\t/|' | fzf )"
+
+    # parse output
+    key="$( printf "%s" "$output" | sed -n '1p' )"
+    selection="$( printf "%s" "$output" | sed '1d')"
+    files="$( printf "%s" "$selection" | awk -F'\t' '{print $2}' )"
+
+    # iterate over all selected files
+    printf "%s\n" "$files" | while read file; do
+        filename="$( basename "$file" )"
+        trashinfo="${info_path}/${filename}.trashinfo"
+        filelocation="${files_path}/${filename}"
+
+        case "$key" in
+            # Recover File
+            return|alt-r) mv "$filelocation" "$path"; rm -f "$trashinfo" ;;
+            # Permanently delete file
+            alt-X) rm -f "$trashinfo" "$filelocation" ;;
+            # Print trashinfo file
+            alt-p) cat "$trashinfo" ;;
+        esac
+    done
+}
+
+case "$1" in
+    -h|--help) echo "$__help"; exit ;;
+    *) _main "$@" ;;
+esac
