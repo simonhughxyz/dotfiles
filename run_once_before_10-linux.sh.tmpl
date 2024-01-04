@@ -4,6 +4,15 @@
 
 export XDG_CONFIG_HOME="${HOME}/.config"
 
+install_nix(){
+  if ! nix doctor > /dev/null; then
+    printf "%s\n" "Installing Nix..."
+    curl -L https://nixos.org/nix/install | sh -s -- --daemon
+  else
+    printf "%s\n" "Nix already installed, skipping..."
+  fi
+}
+
 {{ if eq .chezmoi.osRelease.id "void" -}}
 # void specific code
 
@@ -66,7 +75,9 @@ sudo zypper install \
     zathura-plugin-pdf-mupdf \
     zathura-plugin-ps
 
-{{- end -}}
+{{- end }}
+
+install_nix
 
 printf "%s\n" "Setting ZDOTDIR..."
 echo "ZDOTDIR=~/.config/shell" | sudo tee -a /etc/zshenv
