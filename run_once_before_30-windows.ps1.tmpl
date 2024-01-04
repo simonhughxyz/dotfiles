@@ -18,7 +18,8 @@ $scoop = @(
   "brave",
   "firefox",
   "mpv",
-  "fzf"
+  "fzf",
+  "nerd-fonts/Hack-NF-Mono"
 )
 
 Write-Host "Starting Module Install..."
@@ -36,6 +37,7 @@ scoop update
 
 scoop bucket add extras
 scoop bucket add versions
+scoop bucket add nerd-fonts
 
 Write-Host "Starting Scoop Install..."
 $scoop | ForEach-Object { write-host ("Installing {0}..." -f $_ ); scoop install $_ }
