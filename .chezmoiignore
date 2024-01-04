@@ -22,6 +22,7 @@ Documents/
 # Ignore when windows
 {{- if eq .chezmoi.os "windows" }}
 .config/
+!.config/starship
 .profile
 .zprofile
 {{- end }}

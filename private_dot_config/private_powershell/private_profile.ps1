@@ -4,7 +4,6 @@
 
 # Alias & shortcut functions
 Set-Alias -Name dot -Value chezmoi
-Set-Alias -Name ls -Value Get-ChildItem
 Set-Alias -Name ll -Value Get-ChildItem
 function l. { Get-ChildItem -Hidden }
 function .. { Set-Location .. }
