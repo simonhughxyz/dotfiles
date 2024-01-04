@@ -6,6 +6,7 @@ README.md
 # Ignore when linux
 {{- if and (eq .chezmoi.os "linux") }}
 AppData/
+Documents/
 .gitconfig
 .local/bin/*.ahk
 
