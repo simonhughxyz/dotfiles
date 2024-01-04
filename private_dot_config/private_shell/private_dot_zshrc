@@ -192,8 +192,8 @@ export GPG_TTY=$(tty)
 
 # zoxide
 if command -v zoxide > /dev/null; then
+    eval "$( zoxide init zsh --cmd j )"
     eval "$( zoxide init zsh --cmd cd )"
-    eval "$( zoxide init zsh --cmd c )"
 fi
 
 export LEDGER_FILE=toc.ledger
