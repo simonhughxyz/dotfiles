@@ -1,6 +1,8 @@
 {{- if eq .chezmoi.os "windows" -}}
 # vim: ft=ps1
 
+Write-Host "Initiating Windows setup..."
+
 $Modules = @(
   "PSWindowsUpdate",
   "PSFzf",
@@ -19,9 +21,11 @@ $scoop = @(
   "fzf"
 )
 
+Write-Host "Starting Update..."
 Install-WindowsUpdate -AcceptAll
 
-$Modules | ForEach-Object { Install-Module -Name $_ -Force }
+Write-Host "Starting Module Install..."
+$Modules | ForEach-Object { Write-Host ("Installing {0}..." -f $_); Install-Module -Name $_ -Force }
 
 if ( -not (Get-Command -Name scoop)){
 # Install scoop
