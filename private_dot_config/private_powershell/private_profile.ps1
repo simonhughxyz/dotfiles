@@ -2,29 +2,6 @@
 #
 # Simon H Moore <simon@simonhugh.xyz>
 
-$Modules = @(
-  "PowerLine",
-  "Posh-Git",
-  "PSFzf",
-  "Terminal-Icons"
-)
-
-# install modules
-Function Invoke-Bootstrap()
-{
-  # install modules
-  $Modules | foreach-object { Install-Module $_ -Force}
-}
-
-# Import Modules
-try
-{
-  $Modules | foreach-object { Import-Module $_ }
-} catch
-{
-  throw ("Module not installed, run Invoke-Bootstrap to install modules!")
-}
-
 # Alias & shortcut functions
 Set-Alias -Name ls -Value Get-ChildItem
 Set-Alias -Name ll -Value Get-ChildItem
