@@ -79,6 +79,11 @@ sudo zypper install \
 
 install_nix
 
+nix-channel --update
+nix-env -u '*'
+
+nix-env -iA nixpkgs.ts
+
 printf "%s\n" "Setting ZDOTDIR..."
 echo "ZDOTDIR=~/.config/shell" | sudo tee -a /etc/zshenv
 
