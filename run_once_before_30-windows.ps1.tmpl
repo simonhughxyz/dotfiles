@@ -8,22 +8,27 @@ $Modules = @(
   "BurntToast"
 )
 
-$winget = @(
-  "cURL.cURL",
-  "Starship.Starship",
-  "Jelmerro.Vieb",
-  "Mozilla.Firefox",
-  "Brave.Brave",
-  "mpv.net"
+$scoop = @(
+  "curl",
+  "neovim-nightly",
+  "starship",
+  "vieb",
+  "brave",
+  "firefox",
+  "mpv",
 )
-
-
-$Modules | ForEach-Object { Install-Module -Name $_ -Force }
 
 Install-WindowsUpdate -AcceptAll
 
-if (Get-Command "winget.exe" -ErrorAction SilentlyContinue){
-  $winget | ForEach-Object { winget.exe install -e --id $_}
-}
+$Modules | ForEach-Object { Install-Module -Name $_ -Force }
+
+# Install scoop
+iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+scoop update
+
+scoop add bucket extras
+scoop add bucket versions
+
+$scoop | ForEach-Object { scoop install $_ }
 
 {{- end -}}
