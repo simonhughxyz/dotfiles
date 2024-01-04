@@ -28,7 +28,7 @@ set darkreadertextstroke=0
 set darkreaderscope=["page", "special"]
 
 set searchengine=https://search.brave.com/search?q=%s
-set searchwords=[["az", "https://www.amazon.co.uk/s?k=%s"], ["gm", "https://www.google.com/maps/search/%s"], ["ddg", "https://duckduckgo.com/?q=%s"], ["sx", "https://searx.tiekoetter.com/search?q=%s"], ["b", "https://search.brave.com/search?q=%s"], ["yt", "https://www.youtube.com/results?search_query=%s"], ["gh", "https://github.com/search?q=%s&type=repositories"], ["pb", "https://thepiratebay.org/search.php?q=%s"], ["in", "https://yewtu.be/search?q=%s"], ["nix", "https://search.nixos.org/packages?channel=unstable&query=%s"]]
+set searchwords=[["az", "https://www.amazon.co.uk/s?k=%s"], ["gm", "https://www.google.com/maps/search/%s"], ["ddg", "https://duckduckgo.com/?q=%s"], ["sx", "https://searx.tiekoetter.com/search?q=%s"], ["b", "https://search.brave.com/search?q=%s"], ["yt", "https://www.youtube.com/results?search_query=%s"], ["gh", "https://github.com/search?q=%s&type=repositories"], ["pb", "https://thepiratebay.org/search.php?q=%s"], ["in", "https://yewtu.be/search?q=%s"], ["nix", "https://search.nixos.org/packages?channel=unstable&query=%s"], ["scoop", "https://scoop.sh/#/apps?q=%s"]]
 
 
 " redirect youtube to invidious
