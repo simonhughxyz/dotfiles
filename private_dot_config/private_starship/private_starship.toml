@@ -11,6 +11,7 @@ $username\
 $hostname\
 $directory\
 $fill\
+$git_state\
 $git_branch
 $cmd_duration\
 $status\
@@ -65,6 +66,10 @@ format = '[$path]($style) [$read_only]($read_only_style) '
 # show duration of last command
 [cmd_duration]
 style = 'bold red'
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = '[🍒 PICKING](bold red)'
 
 # show git branch if in git repo
 [git_branch]
