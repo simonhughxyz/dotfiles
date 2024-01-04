@@ -2,9 +2,6 @@
 #
 # Simon H Moore <simon@simonhugh.xyz>
 
-# Set Enviroment Variables
-$ENV:STARSHIP_CONFIG = "$HOME\.config\starship\starship.toml"
-
 # Alias & shortcut functions
 Set-Alias -Name dot -Value chezmoi
 Set-Alias -Name ll -Value Get-ChildItem
@@ -54,6 +51,10 @@ function Edit-Profile
 }
 
 # start starship prompt
+$ENV:STARSHIP_CONFIG = "$HOME\.config\starship\starship.toml"
+Invoke-Expression (&starship init powershell)
+
+# start zoxide
 Invoke-Expression (& { (zoxide init powershell --cmd j | Out-String) })
 Set-Alias -Name cd -Value __zoxide_z -Option AllScope -Scope Global -Force
 Set-Alias -Name cdi -Value __zoxide_zi -Option AllScope -Scope Global -Force
