@@ -2,6 +2,9 @@
 #
 # Simon H Moore <simon@simonhugh.xyz>
 
+# Set Enviroment Variables
+$ENV:STARSHIP_CONFIG = "$HOME\.config\starship\starship.toml"
+
 # Alias & shortcut functions
 Set-Alias -Name dot -Value chezmoi
 Set-Alias -Name ll -Value Get-ChildItem
