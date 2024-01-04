@@ -22,8 +22,11 @@ Install-WindowsUpdate -AcceptAll
 
 $Modules | ForEach-Object { Install-Module -Name $_ -Force }
 
+if ( -not (Get-Command -Name scoop)){
 # Install scoop
-iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+  iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+}
+
 scoop update
 
 scoop add bucket extras
