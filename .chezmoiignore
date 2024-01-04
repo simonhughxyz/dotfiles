@@ -21,8 +21,17 @@ Documents/
 
 # Ignore when windows
 {{- if eq .chezmoi.os "windows" }}
-.config/
-!.config/starship
+.config/nvim/
+.config/foot/
+.config/git/
+.config/lf/
+.config/mpv/
+.config/newsboat/
+.config/powershell/
+.config/shell/
+.config/task/
+.config/wordlist/
+.config/zathura/
 .profile
 .zprofile
 {{- end }}
