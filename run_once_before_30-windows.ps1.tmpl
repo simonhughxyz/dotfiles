@@ -33,6 +33,6 @@ scoop add bucket extras
 scoop add bucket versions
 
 Write-Host "Starting Scoop Install..."
-$scoop | ForEach-Object { writ-host ("Installing {0}..." -f $_ ); scoop install $_ }
+$scoop | ForEach-Object { write-host ("Installing {0}..." -f $_ ); scoop install $_ }
 
 {{- end -}}
