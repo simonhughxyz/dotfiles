@@ -29,8 +29,8 @@ if ( -not (Get-Command -Name scoop)){
 
 scoop update
 
-scoop add bucket extras
-scoop add bucket versions
+scoop bucket add extras
+scoop bucket add versions
 
 Write-Host "Starting Scoop Install..."
 $scoop | ForEach-Object { write-host ("Installing {0}..." -f $_ ); scoop install $_ }
