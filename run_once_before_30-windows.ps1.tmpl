@@ -24,7 +24,7 @@ $scoop = @(
 Write-Host "Starting Module Install..."
 $Modules | ForEach-Object { Write-Host ("Installing {0}..." -f $_); Install-Module -Name $_ -Force }
 
-Write-Host "Starting Update..."
+Write-Host "Starting Windows Update..."
 Install-WindowsUpdate -AcceptAll
 
 if ( -not (Get-Command -Name scoop)){
