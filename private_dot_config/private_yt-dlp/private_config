@@ -1,0 +1,28 @@
+--no-check-certificates
+--cookies-from-browser chromium
+--audio-format best
+--add-metadata
+--parse-metadata "title:%(title)s [%(channel,uploader,creator|unkown)s]"
+--geo-bypass
+--buffer-size 200M
+--no-playlist
+#--downloader aria2c
+#--downloader "dash,m3u8:native"
+#--downloader-args "aria2c:--truncate-console-readout=false"
+--output ~/Videos/%(playlist&playlist|)s/%(playlist_title,webpage_url_domain,extractor)s/%(series|)s/%(playlist_index|)s%(playlist_index&_|)s%(season_number|)s%(episode_number&x|)s%(episode_number|)s%(season_number&_|)s%(title,alt_title)s[%(channel,uploader,creator,series|unkown)s].%(ext)s
+--restrict-filenames
+-f bestvideo*+bestaudio/best
+-S res~720,fps~30
+--audio-multistreams
+--write-auto-subs
+--embed-subs
+--sub-langs en,en-orig,de
+--user-agent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+--merge-output-format mkv
+--remux-video mkv
+--progress
+--no-mtime
+#--exec-before-download "notify-send -u low 'Download Started' %(title)q'\n- <small><i>'%(channel,uploader,creator|unknown)q' ['%(webpage_url_domain)q']</i></small>'"
+--exec "mkdir -p ~/.local/share/yt-dlp; printf '%s\t\0%s\t\0%s\t\0%s\t\0%s\t\0%s\t\0%s\t\0%s\t\0%s\n' \"$( date '+%Y-%m-%d %H:%M:%S' )\" '%(original_url)s' '%(webpage_url_domain)s' '%(playlist_id|video)s' '%(duration>%H:%M:%S)s' \"$( du -k %(filepath)q | cut -f1 )\" %(filepath)q %(channel,uploader,creator|unknown)q %(title,alt_title)q >> ~/.local/share/yt-dlp/download.history;"
+#--exec "notify-send -u low 'Download Finished' %(title)q'\n- <small><i>'%(channel,uploader,creator|unknown)q' ['%(webpage_url_domain)q']</i></small>'"
+--exec "sep='===================================================================================================='; printf '\n\n%s: %s\n%s\n%s - [%s]\n%s - [%s]\nres: %sx%s, fps: %s, vc: %s, ac: %s, vbr: %s%s, abr: %s%s, size: %s\n%s\n' 'Download Complete' %(filepath)q "$sep" %(title)q %(channel,uploader,creator|unknown)q %(original_url)q %(live_status)q %(width)q %(height)q %(fps)q %(vcodec)q %(acodec)q '%(vbr)01d' %(vbr&Kb/s|)q '%(abr)01d' %(vbr&Kb/s|)q \"$( du -h %(filepath)q | cut -f1 )\" "$sep" "
