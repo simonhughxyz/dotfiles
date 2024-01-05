@@ -69,7 +69,7 @@ export NOTMUCH_CONFIG="$XDG_CONFIG_HOME/notmuch/notmuchrc"
 export NMBGIT="$XDG_DATA_HOME/notmuch/nmbug"
 export DOTREMINDERS="$HOME/Documents/remind/init.rem"
 export REMINDFILE="$HOME/Documents/remind/init.rem"
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
+export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/starship.toml"
 
 # # LESS
 export LESS=-R
