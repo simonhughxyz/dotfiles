@@ -45,14 +45,48 @@ set splitright=true
 
 set guihidetimeout=3000
 set guitabbar=never
-nnoremap <tab> <:set guitabbar=always>
-nnoremap <s-tab> <:set guitabbar=never>
 
+
+" =======================
+" === Custom Commands ===
+" =======================
 
 command! addfavourite <:set favoritepages+=<useCurrentUrl>>
 command! removefavourite <:set favoritepages-=<useCurrentUrl>>
 
-" Container settings
+
+" ==================
+" === Navigation ===
+" ==================
+
+nnoremap gt <:set tabnewposition=end><:tabnew><:set tabnewposition=right>
+nnoremap gT <:set tabnewposition=start><:tabnew><:set tabnewposition=right>
+
+
+" =======================
+" === Window Controls ===
+" =======================
+
+nnoremap <C-h> <toLeftSplitWindow>
+nnoremap <C-l> <toRightSplitWindow>
+nnoremap <C-k> <toTopSplitWindow>
+nnoremap <C-j> <toBottomSplitWindow>
+
+nnoremap <C-H> <leftHalfSplitWindow>
+nnoremap <C-L> <rightHalfSplitWindow>
+nnoremap <C-K> <topHalfSplitWindow>
+nnoremap <C-J> <bottomHalfSplitWindow>
+
+nmap <C-Up> <increaseHeightSplitWindow>
+nmap <C-Down> <decreaseHeightSplitWindow>
+nmap <C-Right> <increaseWidthSplitWindow>
+nmap <C-Left> <decreaseWidthSplitWindow>
+
+
+" ==========================
+" === Container Settings ===
+" ==========================
+
 set containernewtab=main
 command! temp <:set containernewtab=temp%n><:tabnew><:set containernewtab=s:usecurrent>
 command! main <:set containernewtab=main><:tabnew><:set containernewtab=s:usecurrent>
@@ -60,6 +94,8 @@ command! acc <:set containernewtab=acc><:tabnew><:set containernewtab=s:usecurre
 command! work <:set containernewtab=work><:tabnew><:set containernewtab=s:usecurrent>
 command! dad <:set containernewtab=dad><:tabnew><:set containernewtab=s:usecurrent>
 command! mum <:set containernewtab=mum><:tabnew><:set containernewtab=s:usecurrent>
+
+" if capitalized, open container while copying current url
 command! Temp <:set containernewtab=temp%n><action.openNewTabWithCurrentUrl><:set containernewtab=s:usecurrent>
 command! Main <:set containernewtab=main><action.openNewTabWithCurrentUrl><:set containernewtab=s:usecurrent>
 command! Acc <:set containernewtab=acc><action.openNewTabWithCurrentUrl><:set containernewtab=s:usecurrent>
@@ -75,6 +111,14 @@ set containercolors+=^work$~#ff0000
 set containercolors+=^dad$~#00ff00
 set containercolors+=^mum$~#ff0099
 
+
+" ================
+" === Keybinds ===
+" ================
+
+nnoremap <tab> <:set guitabbar=always>
+nnoremap <s-tab> <:set guitabbar=never>
+
 unmap x
 nnoremap x <pointer.start><action.startFollowCurrentTab>
 pmap <space>v <:set externalcommand=mpv><p.externalLink>
@@ -86,21 +130,9 @@ nnoremap <space>d <:set externalcommand=ytdl><action.openLinkExternal>
 nnoremap <space>t <:set externalcommand="transmission-remote --add"><action.openLinkExternal>
 nnoremap <space>b <:set externalcommand=brave><action.openLinkExternal>
 
-nnoremap gt <:set tabnewposition=end><:tabnew><:set tabnewposition=right>
-nnoremap gT <:set tabnewposition=start><:tabnew><:set tabnewposition=right>
-
 " open command mode with buffer search
 nnoremap b <action.toCommandMode>b< >
 
-nnoremap <C-h> <toLeftSplitWindow>
-nnoremap <C-l> <toRightSplitWindow>
-nnoremap <C-k> <toTopSplitWindow>
-nnoremap <C-j> <toBottomSplitWindow>
-
-nnoremap <C-H> <leftHalfSplitWindow>
-nnoremap <C-L> <rightHalfSplitWindow>
-nnoremap <C-K> <topHalfSplitWindow>
-nnoremap <C-J> <bottomHalfSplitWindow>
 
 nmap <C-Up> <increaseHeightSplitWindow>
 nmap <C-Down> <decreaseHeightSplitWindow>
