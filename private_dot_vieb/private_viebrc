@@ -14,7 +14,7 @@ set windowmaximize=true
 " only use homerow keys for follow mode
 set followchars=custom:jkfdl;sa
 " don't do anything with other keys when in follow mode
-set followfallbackaction=nothing  
+set followfallbackaction=nothing
 
 set adblocker=update
 
