@@ -32,6 +32,7 @@ Documents/
 .config/task/
 .config/wordlist/
 .config/zathura/
+.config/qutebrowser/
 .profile
 .zprofile
 {{- end }}
