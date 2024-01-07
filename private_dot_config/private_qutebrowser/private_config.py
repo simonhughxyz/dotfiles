@@ -14,7 +14,6 @@ from datetime import datetime
 # ======================
 
 c.qt.args = ["disable-reading-from-canvas"]
-c.qt.force_platform = "wayland"
 c.hints.chars = "fjkdlsa;"
 # c.fonts.hints               = '18 monospace bold'
 # c.input.partial_timeout     = 5
