@@ -174,7 +174,7 @@ c.colors.tabs.selected.odd.fg = "#000000"
 
 config.bind("<tab>", "config-cycle -t tabs.show never always")
 config.bind(leader + "b", "cmd-set-text --space :tab-select")
-config.bind(leader + ",", "cmd-set-text --space :tab-select")
+config.bind(leader + ",", "tab-focus last")
 
 c.colors.hints.bg = "#bb44cc"
 c.colors.hints.fg = "#000000"
