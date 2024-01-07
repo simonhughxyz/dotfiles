@@ -1,0 +1,12 @@
+#!/bin/sh
+# Copyright (c) 2022 Praveen Kumar S
+set -e
+
+# Include config
+. $(dirname $0)/containers_config
+
+# Prints a list of Containers
+for line in $(cat $CONTAINER_LIST)
+do
+	send_msg "info" "$line"
+done

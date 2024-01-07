@@ -1,0 +1,51 @@
+#!/bin/sh
+# Copyright (c) 2022 Praveen Kumar S
+
+# Use the original Configuration for all containers
+CONFIG_FILE="$HOME/.config/qutebrowser/config.py"
+
+# File containing list of containers
+CONTAINER_LIST="$HOME/Documents/qute_containers"
+
+# Base directory to store the containers
+CONTAINER_BASE="$HOME/.local/share/qutebrowser-containers"
+
+# Dmenu program
+DMENU="fzf"
+
+# Prompt for Dmenu
+DMENU_PROMPT="Choose Container"
+
+# Custom options for dmenu/rofi
+DMENU_FLAGS=-no-custom # -no-custom prevents custom input in rofi
+
+
+# Helper function to check if the container exists
+container_exists ()
+{
+	test $(grep -xc "$1" "$CONTAINER_LIST") -ge 1
+	return $?
+}
+
+# Helper function to output messages
+send_msg ()
+{
+	# If QUTE_FIFO is defined, send message-* command to qutebrowser.
+	# Else output to stdout / stderr
+	if test -n "$QUTE_FIFO"
+	then
+		if test $1 = "info"
+		then
+			printf "message-info \"%s\"\n" "$2" >> $QUTE_FIFO
+		else
+			printf "message-error \"%s\"\n" "$2" >> $QUTE_FIFO
+		fi
+	else
+		if test $1 = "info"
+		then
+			echo "$2" >> /dev/stdout
+		else
+			echo "$2" >> /dev/stderr
+		fi
+	fi
+}
