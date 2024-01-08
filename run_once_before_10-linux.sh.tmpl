@@ -56,7 +56,7 @@ echo "ZDOTDIR=~/.config/shell" | sudo tee -a /etc/zsh/zshenv
 printf "%s\n%s\n" "Detected OpenSuse Tumbleweed Linux" "Installing packages..."
 
 sudo zypper dup
-sudo zypper install \
+sudo zypper install -y \
     zsh \
     curl \
     wget \
