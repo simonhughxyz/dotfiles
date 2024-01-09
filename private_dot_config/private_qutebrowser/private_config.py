@@ -205,6 +205,11 @@ config.bind("m", "tab-mute")
 config.bind("gc", "tab-clone")
 # config.bind('<Escape>', 'mode-leave ;; jseval -q document.activeElement.blur()', mode='insert')
 config.bind("<Ctrl+Escape>", "fake-key <Escape>")
+config.bind("e", "cmd-set-text --space :open")
+config.bind("E", "cmd-set-text --space :open -t ")
+config.bind("ge", "cmd-set-text --space :open -w ")
+config.bind("gE", "cmd-set-text --space :open -b ")
+config.bind("gp", "cmd-set-text --space :open -p ")
 
 
 
