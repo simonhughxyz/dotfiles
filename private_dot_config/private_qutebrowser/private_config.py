@@ -101,6 +101,8 @@ c.url.searchengines = {
     "nix": "https://search.nixos.org/packages?channel=unstable&query={}",
     # Scoop Package Search
     "scoop": "https://scoop.sh/#/apps?q={}",
+    # Giphy search
+    "gif" : "https://giphy.com/search/{}"
 }
 
 # leader key
