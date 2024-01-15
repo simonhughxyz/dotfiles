@@ -184,6 +184,21 @@ c.colors.hints.fg = "#000000"
 
 
 # ======================
+# === Windows Config ===
+# ======================
+
+# keybinds
+config.bind("we", "cmd-set-text --space :open -w")
+config.bind("wo", "open -w")
+config.bind("wc", "tab-clone -w")
+config.bind("wu", "undo --window")
+config.bind("wC", "cmd-set-text :open -w {url:pretty}")
+config.bind("wg", "cmd-set-text --space :tab-give")
+config.bind("wG", "cmd-set-text --space :tab-give -k")
+config.bind("wt", "cmd-set-text --space :tab-take")
+config.bind("wT", "cmd-set-text --space :tab-take -k")
+
+# ======================
 # === Other Keybinds ===
 # ======================
 
@@ -211,8 +226,6 @@ config.bind("e", "cmd-set-text --space :open")
 config.bind("E", "cmd-set-text --space :open -t")
 config.bind("ge", "cmd-set-text --space :open {url:pretty}")
 config.bind("gE", "cmd-set-text --space :open -t {url:pretty}")
-config.bind("we", "cmd-set-text --space :open -w ")
-config.bind("wE", "cmd-set-text --space :open -w {url:pretty} ")
 config.bind("gp", "cmd-set-text --space :open -p ")
 config.bind("gP", "cmd-set-text --space :open -p {url:pretty}")
 
