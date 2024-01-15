@@ -198,6 +198,22 @@ config.bind("wG", "cmd-set-text --space :tab-give -k")
 config.bind("wt", "cmd-set-text --space :tab-take")
 config.bind("wT", "cmd-set-text --space :tab-take -k")
 
+
+# =============================
+# === Private Window Config ===
+# =============================
+
+# keybinds
+config.bind("Pe", "cmd-set-text --space :open -p")
+config.bind("Po", "open -p")
+config.bind("Pc", "tab-clone -p")
+config.bind("PC", "cmd-set-text :open -p {url:pretty}")
+config.bind("Pg", "cmd-set-text --space :tab-give -p")
+config.bind("PG", "cmd-set-text --space :tab-give -k -p")
+config.bind("Pt", "cmd-set-text --space :tab-take")
+config.bind("PT", "cmd-set-text --space :tab-take -k -p")
+
+
 # ======================
 # === Other Keybinds ===
 # ======================
