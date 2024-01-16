@@ -179,6 +179,12 @@ config.bind(leader + ",", "tab-focus last")
 config.bind("<Ctrl+j>", "tab-move +")
 config.bind("<Ctrl+k>", "tab-move -")
 
+config.bind("e", "cmd-set-text --space :open")
+config.bind("E", "cmd-set-text --space :open -t")
+config.bind("ge", "cmd-set-text --space :open {url:pretty}")
+config.bind("gc", "tab-clone")
+config.bind("gC", "cmd-set-text --space :open -t {url:pretty}")
+
 c.colors.hints.bg = "#bb44cc"
 c.colors.hints.fg = "#000000"
 
