@@ -248,7 +248,6 @@ config.bind("`a", ":zoom 100 ;; mode-enter set_mark ;; zoom 150")
 
 
 # rebinds
-config.bind("d", "tab-close")
 # config.bind('O', 'set-cmd-text -s :open -w')
 config.bind("F", "hint all tab")
 config.bind("I", "hint -f inputs normal ")
