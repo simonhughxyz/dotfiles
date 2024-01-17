@@ -185,6 +185,16 @@ config.bind("ge", "cmd-set-text --space :open {url:pretty}")
 config.bind("gc", "tab-clone")
 config.bind("gC", "cmd-set-text --space :open -t {url:pretty}")
 
+config.unbind("d")
+config.bind("dd", "tab-close")
+config.bind("df", "tab-close -f")
+config.bind("dp", "tab-close -p")
+config.bind("dn", "tab-close -n")
+config.bind("dD", "tab-only")
+config.bind("dF", "tab-only -f")
+config.bind("dP", "tab-only -p")
+config.bind("dN", "tab-only -n")
+
 c.colors.hints.bg = "#bb44cc"
 c.colors.hints.fg = "#000000"
 
@@ -204,6 +214,8 @@ config.bind("wG", "cmd-set-text --space :tab-give -k")
 config.bind("wt", "cmd-set-text --space :tab-take")
 config.bind("wT", "cmd-set-text --space :tab-take -k")
 
+config.bind("dw", "close")
+config.bind("dW", "window-only")
 
 # =============================
 # === Private Window Config ===
