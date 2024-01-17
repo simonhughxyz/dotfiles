@@ -232,6 +232,45 @@ config.bind("Pt", "cmd-set-text --space :tab-take")
 config.bind("PT", "cmd-set-text --space :tab-take -k -p")
 
 
+# =========================
+# === Open URL Keybinds ===
+# =========================
+
+# brave
+config.bind(leader + "fb", 'hint links spawn --detach brave "{hint-url}"')
+config.bind(leader + "rb", 'hint -r links spawn --detach brave "{hint-url}"')
+config.bind(leader + "ub", 'spawn --detach brave "{url}"')
+# firefox
+config.bind(leader + "ff", 'hint links spawn --detach firefox "{hint-url}"')
+config.bind(leader + "rf", 'hint -r links spawn --detach firefox "{hint-url}"')
+config.bind(leader + "uf", 'spawn --detach firefox "{url}"')
+# chromium
+config.bind(leader + "fc", 'hint links spawn --detach chromium "{hint-url}"')
+config.bind(leader + "rc", 'hint -r links spawn --detach chromium "{hint-url}"')
+config.bind(leader + "uc", 'spawn --detach chromium "{url}"')
+# mpv
+config.bind(leader + "fM", 'hint links spawn --detach mpv "{hint-url}"')
+config.bind(leader + "rM", 'hint -r links spawn --detach mpv "{hint-url}"')
+config.bind(leader + "uM", 'spawn --detach mpv "{url}"')
+# ytdl
+config.bind(leader + "fm", 'hint links spawn ytdl "{hint-url}"')
+config.bind(leader + "rm", 'hint -r links spawn --detach ytdl "{hint-url}"')
+config.bind(leader + "um", 'spawn --detach ytdl "{url}"')
+# images
+config.bind(leader + "fi", 'hint images spawn --detach img -u "{hint-url}"')
+config.bind(leader + "ri", 'hint -r images spawn --detach img -u "{hint-url}"')
+config.bind(leader + "ui", 'spawn --detach img -u "{url}"')
+config.bind(leader + "ft", 'hint links spawn --detach tm -a "{hint-url}"')
+config.bind(leader + "rt", 'hint -r links spawn --detach tm -a "{hint-url}"')
+config.bind(leader + "ut", 'spawn --detach tm -a "{url}"')
+config.bind(leader + "fq", "hint links userscript qr")
+config.bind(leader + "uq", "spawn --userscript qr")
+config.bind(leader + "rq", "hint -r links userscript qr")
+config.bind(leader + "fr", "hint links spawn --userscript readability {hint-url}")
+config.bind(leader + "rr", "hint links -r spawn --userscript readability {hint-url}")
+config.bind(leader + "ur", "spawn --userscript readability {url}")
+
+
 # ======================
 # === Other Keybinds ===
 # ======================
@@ -273,36 +312,6 @@ c.aliases['container-rm'] = 'spawn --userscript container-rm'
 # config.bind('<Alt-c>','set-cmd-text -s :spawn --userscript container-open')
 # config.bind('<Alt-f>','hint links userscript container-open')
 # config.bind('<Alt-f>','hint links userscript container-open')
-
-
-config.bind("R", "spawn --userscript readability-js")
-config.bind(leader + leader, "fake-key " + leader)
-config.bind(leader + "o", "set-cmd-text -s :open -p")
-config.bind(leader + "vv", 'hint links spawn --detach mpv "{hint-url}"')
-config.bind(leader + "vr", 'hint -r links spawn --detach mpv "{hint-url}"')
-config.bind(leader + "vu", 'spawn --detach mpv "{url}"')
-config.bind(leader + "dd", 'hint links spawn ytdl "{hint-url}"')
-config.bind(leader + "dr", 'hint -r links spawn --detach ytdl "{hint-url}"')
-config.bind(leader + "du", 'spawn --detach ytdl "{url}"')
-config.bind(leader + "ii", 'hint images spawn --detach img -u "{hint-url}"')
-config.bind(leader + "ir", 'hint -r images spawn --detach img -u "{hint-url}"')
-config.bind(leader + "iu", 'spawn --detach img -u "{url}"')
-config.bind(leader + "cc", 'hint links spawn --detach chromium "{hint-url}"')
-config.bind(leader + "cr", 'hint -r links spawn --detach chromium "{hint-url}"')
-config.bind(leader + "cu", 'spawn --detach chromium "{url}"')
-config.bind(leader + "bb", 'hint links spawn --detach brave "{hint-url}"')
-config.bind(leader + "br", 'hint -r links spawn --detach brave "{hint-url}"')
-config.bind(leader + "bu", 'spawn --detach brave "{url}"')
-config.bind(leader + "ff", 'hint links spawn --detach firefox "{hint-url}"')
-config.bind(leader + "fr", 'hint -r links spawn --detach firefox "{hint-url}"')
-config.bind(leader + "fu", 'spawn --detach firefox "{url}"')
-config.bind(leader + "tt", 'hint links spawn --detach tm -a "{hint-url}"')
-config.bind(leader + "tr", 'hint -r links spawn --detach tm -a "{hint-url}"')
-config.bind(leader + "tu", 'spawn --detach tm -a "{url}"')
-config.bind(leader + "qq", "hint links userscript qr")
-config.bind(leader + "qu", "spawn --userscript qr")
-config.bind(leader + "qr", "hint -r links userscript qr")
-config.bind(leader + "r", "spawn --userscript readability-js")
 
 
 config.bind("<z><l>", "spawn --userscript qute-pass --dmenu-invocation fmenu")
