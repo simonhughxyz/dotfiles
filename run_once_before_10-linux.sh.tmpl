@@ -18,8 +18,8 @@ install_nix(){
 
 printf "%s\n%s\n" "Detected Void Linux" "Installing packages..."
 
-sudo xbps-install -Suv
-sudo xbps-install -S \
+sudo xbps-install -Suv -y
+sudo xbps-install -S -y \
     zsh \
     curl \
     wget \
