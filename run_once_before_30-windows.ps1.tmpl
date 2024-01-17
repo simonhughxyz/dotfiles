@@ -25,7 +25,8 @@ $scoop = @(
   "win32yank",
   "zoxide",
   "jq",
-  "yq"
+  "yq",
+  "main/pipx"
 )
 
 Write-Host "Starting Module Install..."
@@ -41,6 +42,7 @@ if ( -not (Get-Command -Name scoop)){
 
 scoop update
 
+scoop bucket add main
 scoop bucket add extras
 scoop bucket add versions
 scoop bucket add nerd-fonts
