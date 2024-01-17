@@ -36,7 +36,7 @@ c.fileselect.folder.command = ["st", "-e", "nnn", "-p", "{}"]
 c.fileselect.single_file.command = ["st", "-e", "nnn", "-p", "{}"]
 c.fileselect.multiple_files.command = ["st", "-e", "nnn", "-p", "{}"]
 
-# Status bar 
+# Status bar
 c.statusbar.widgets = ["keypress", "url", "scroll", "history", "progress"]
 
 
