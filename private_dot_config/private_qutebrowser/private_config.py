@@ -66,6 +66,7 @@ c.downloads.remove_finished = -1
 c.aliases = {
     "h": "help",
     "w": "session-save",
+    "e": "session-load",
     "qa": "quit",
     "wq": "quit --save",
     "cs": "config-source",
