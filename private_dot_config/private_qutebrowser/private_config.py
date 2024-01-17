@@ -271,6 +271,17 @@ config.bind(leader + "rr", "hint links -r spawn --userscript readability {hint-u
 config.bind(leader + "ur", "spawn --userscript readability {url}")
 
 
+# ================================
+# === Container/Profile Config ===
+# ================================
+
+c.aliases['container-open'] = 'spawn qbpm launch'
+c.aliases['container-add'] = 'spawn  qbpm new'
+
+config.bind("co", "cmd-set-text -s :container-open")
+config.bind("ca", "cmd-set-text -s :container-add")
+
+
 # ======================
 # === Other Keybinds ===
 # ======================
@@ -298,20 +309,6 @@ config.bind("gc", "tab-clone")
 # config.bind('<Escape>', 'mode-leave ;; jseval -q document.activeElement.blur()', mode='insert')
 config.bind("<Ctrl+Escape>", "fake-key <Escape>")
 
-
-
-c.aliases['container-open'] = 'spawn --userscript container-open'
-c.aliases['container-ls'] = 'spawn --userscript container-ls'
-c.aliases['container-add'] = 'spawn --userscript container-add'
-c.aliases['container-rm'] = 'spawn --userscript container-rm'
-
-
-# config.bind(leader + "cd", "set-cmd-text -s :open -p")
-#
-# onfig.bind('C','spawn --userscript container-open')
-# config.bind('<Alt-c>','set-cmd-text -s :spawn --userscript container-open')
-# config.bind('<Alt-f>','hint links userscript container-open')
-# config.bind('<Alt-f>','hint links userscript container-open')
 
 
 config.bind("<z><l>", "spawn --userscript qute-pass --dmenu-invocation fmenu")
