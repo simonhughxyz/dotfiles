@@ -185,6 +185,7 @@ config.bind("E", "cmd-set-text --space :open -t")
 config.bind("ge", "cmd-set-text --space :open {url:pretty}")
 config.bind("gc", "tab-clone")
 config.bind("gC", "cmd-set-text --space :open -t {url:pretty}")
+config.bind("gM", "tab-move")
 
 config.unbind("d")
 config.bind("dd", "tab-close")
