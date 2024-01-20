@@ -2,6 +2,12 @@
 #
 # Simon H Moore <simon@simonhugh.xyz>
 
+#NOTE: Modules to import
+$modules = @(
+  "Terminal-Icons"
+)
+$modules | foreach-object { import-module $_ }
+
 # Alias & shortcut functions
 Set-Alias -Name dot -Value chezmoi
 Set-Alias -Name ll -Value Get-ChildItem
