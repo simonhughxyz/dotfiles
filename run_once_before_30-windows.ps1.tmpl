@@ -57,7 +57,7 @@ pipx.cmd install 'git+https://github.com/simonhughxyz/qbpm.git#egg=qbpm'
 $QuteBrowserSymlinkPath = "~/AppData/Roaming/qutebrowser/config"
 $QuteBrowserConfigPath = "~/.config/qutebrowser"
 
-remove-item -force $QuteBrowserSymlinkPath
+remove-item -force $QuteBrowserSymlinkPath -ErrorAction SilentlyContinue
 new-item -type SymbolicLink -path $QuteBrowserSymlinkPath -value $QuteBrowserConfigPath
 
 {{- end -}}
