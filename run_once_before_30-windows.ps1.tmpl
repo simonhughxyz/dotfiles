@@ -52,6 +52,7 @@ Write-Host "Starting Scoop Install..."
 $scoop | ForEach-Object { write-host ("Installing {0}..." -f $_ ); scoop install $_ }
 
 # set up qutebrowser
+write-host "Installing qbpm..."
 pipx.cmd install 'git+https://github.com/simonhughxyz/qbpm.git#egg=qbpm'
 
 $QuteBrowserSymlinkPath = "~/AppData/Roaming/qutebrowser/config"
