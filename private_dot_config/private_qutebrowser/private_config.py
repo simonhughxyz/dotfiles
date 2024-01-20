@@ -277,11 +277,13 @@ config.bind(leader + "ur", "spawn --userscript readability {url}")
 # === Container/Profile Config ===
 # ================================
 
-c.aliases['container-open'] = 'spawn qbpm launch'
-c.aliases['container-add'] = 'spawn  qbpm new'
+c.aliases['container-open'] = 'spawnqbpm launch'
+c.aliases['container-add'] = 'spawn qbpm new'
+c.aliases['container-list'] = 'spawn --output-messages qbpm list'
 
 config.bind("co", "cmd-set-text -s :container-open")
 config.bind("ca", "cmd-set-text -s :container-add")
+config.bind("cl", "container-list")
 
 
 # ======================
