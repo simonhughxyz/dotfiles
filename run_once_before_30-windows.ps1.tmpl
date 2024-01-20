@@ -51,6 +51,6 @@ scoop bucket add nerd-fonts
 Write-Host "Starting Scoop Install..."
 $scoop | ForEach-Object { write-host ("Installing {0}..." -f $_ ); scoop install $_ }
 
-pipx.cmd install 'git+https://github.com/pvsr/qbpm.git#egg=qbpm'
+pipx.cmd install 'git+git@github.com:simonhughxyz/qbpm.git#egg=qbpm'
 
 {{- end -}}
