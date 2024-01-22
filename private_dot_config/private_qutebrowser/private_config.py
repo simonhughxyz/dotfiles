@@ -47,7 +47,6 @@ c.colors.webpage.darkmode.algorithm = "lightness-cielab"
 c.colors.webpage.darkmode.policy.images = "smart"
 c.colors.webpage.darkmode.threshold.background = 150
 c.colors.webpage.bg = "#000000"
-c.content.user_stylesheets = ["~/.config/qutebrowser/css/custom-dark.css"]
 
 # Downloads
 
