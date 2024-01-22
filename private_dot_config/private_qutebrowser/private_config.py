@@ -277,7 +277,7 @@ config.bind(leader + "ur", "spawn --userscript readability {url}")
 # === Container/Profile Config ===
 # ================================
 
-c.aliases['container-open'] = 'spawnqbpm launch'
+c.aliases['container-open'] = 'spawn qbpm launch'
 c.aliases['container-add'] = 'spawn qbpm new'
 c.aliases['container-list'] = 'spawn --output-messages qbpm list'
 
