@@ -285,6 +285,38 @@ config.bind("co", "cmd-set-text -s :container-open")
 config.bind("ca", "cmd-set-text -s :container-add")
 config.bind("cl", "container-list")
 
+# ================================
+# === Enable / Disable Content ===
+# ================================
+
+# adblocker
+config.bind("cea", "set -p -u {url:host} content.blocking.enabled true")
+config.bind("cda", "set -p -u {url:host} content.blocking.enabled false")
+config.bind("ceua", "set -p -u {url} content.blocking.enabled true")
+config.bind("cdua", "set -p -u {url} content.blocking.enabled false")
+# javascript
+config.bind("cej", "set -p -u {url:host} content.javascript.enabled true")
+config.bind("cdj", "set -p -u {url:host} content.javascript.enabled false")
+config.bind("ceuj", "set -p -u {url} content.javascript.enabled true")
+config.bind("cduj", "set -p -u {url} content.javascript.enabled false")
+# cookies
+config.bind("cec", "set -p -u {url:host} content.cookies.accept no-3rdparty")
+config.bind("cEc", "set -p -u {url:host} content.cookies.accept all")
+config.bind("cdc", "set -p -u {url:host} content.cookies.accept never")
+config.bind("ceuc", "set -p -u {url} content.cookies.accept no-3rdparty")
+config.bind("cEuc", "set -p -u {url} content.cookies.accept all")
+config.bind("cduc", "set -p -u {url} content.cookies.accept never")
+# clipboard
+config.bind("cey", "set -p -u {url:host} content.javascript.clipboard access")
+config.bind("cdy", "set -p -u {url:host} content.javascript.clipboard none")
+config.bind("ceuy", "set -p -u {url} content.javascript.clipboard access")
+config.bind("cduy", "set -p -u {url} content.javascript.clipboard none")
+# images
+config.bind("cei", "set -p -u {url:host} content.images true")
+config.bind("cdi", "set -p -u {url:host} content.images false")
+config.bind("ceui", "set -p -u {url} content.images true")
+config.bind("cdui", "set -p -u {url} content.images false")
+
 
 # ======================
 # === Other Keybinds ===
