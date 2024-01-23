@@ -72,6 +72,7 @@ c.aliases = {
     "au": "adblock-update",
     "qr": "spawn --userscript qr",
     "zm": "zoom 100; set",
+    "dc": "download-clear",
 }
 
 # Search Engines
