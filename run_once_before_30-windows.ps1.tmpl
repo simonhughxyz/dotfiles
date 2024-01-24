@@ -72,8 +72,12 @@ $Parameters = @{
 $Property = Get-ItemProperty @Parameters -ErrorAction SilentlyContinue
 
 if (-not ($Property)){
-  write-host ("Enabling wifi auto connect when on Ethernet")
-  New-ItemProperty @Parameters -Value 0 -PropertyType Dword -Force
+  try{
+    New-ItemProperty @Parameters -Value 0 -PropertyType Dword -Force
+    write-host ("Enabled wifi auto connect when on Ethernet")
+  }catch{
+    Write-Error ("Could not enable wifi auto connect")
+  }
 }
 
 {{- end -}}
