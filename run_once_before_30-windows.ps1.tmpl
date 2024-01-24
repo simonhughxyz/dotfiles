@@ -1,7 +1,17 @@
 {{- if eq .chezmoi.os "windows" -}}
 # vim: ft=ps1
 
-Write-Host "Initiating Windows setup..."
+# Colors
+$SuccessColor = @{
+  ForegroundColor = "White"
+  BackgroundColor = "DarkGreen"
+}
+$HeaderColor = @{
+  ForegroundColor = "White"
+  BackgroundColor = "DarkMagenta"
+}
+
+Write-Host ("Initiating Windows setup...") @HeaderColor
 
 $Modules = @(
   "PSWindowsUpdate",
@@ -30,11 +40,24 @@ $scoop = @(
   "main/pipx"
 )
 
-Write-Host "Starting Module Install..."
-$Modules | ForEach-Object { Write-Host ("Installing {0}..." -f $_); Install-Module -Name $_ -Force }
+Write-Host ("Starting Module Install...") @HeaderColor
+$Modules | ForEach-Object {
+  Write-Host ("Installing {0}..." -f $_);
+  try{
+    Install-Module -Name $_ -Force
+    Write-Host ("Success! Installed module: {0}" -f $_) @SuccessColor
+  }catch{
+    Write-Error ("Error! Could not install module: {0}" -f $_)
+  }
+  }
 
-Write-Host "Starting Windows Update..."
-Install-WindowsUpdate -AcceptAll
+Write-Host ("Starting Windows Update...") @HeaderColor
+try{
+  Install-WindowsUpdate -AcceptAll
+  Write-Host ("Success! Updated Windows") @SuccessColor
+}catch{
+  Write-Error ("Error! Could not update windows")
+}
 
 if ( -not (Get-Command -Name scoop)){
 # Install scoop
@@ -51,6 +74,8 @@ scoop bucket add nerd-fonts
 Write-Host "Starting Scoop Install..."
 $scoop | ForEach-Object { write-host ("Installing {0}..." -f $_ ); scoop install $_ }
 
+Write-Host ("Starting Application Set Up...") @HeaderColor
+
 # set up qutebrowser
 write-host "Installing qbpm..."
 pipx.cmd install 'git+https://github.com/simonhughxyz/qbpm.git#egg=qbpm'
@@ -59,10 +84,14 @@ $QuteBrowserSymlinkPath = "~/AppData/Roaming/qutebrowser/config"
 $QuteBrowserConfigPath = "~/.config/qutebrowser"
 
 remove-item -force -recurse -confirm:$false -path $QuteBrowserSymlinkPath -ErrorAction SilentlyContinue
-new-item -type SymbolicLink -path $QuteBrowserSymlinkPath -value $QuteBrowserConfigPath
+try{
+  new-item -type SymbolicLink -path $QuteBrowserSymlinkPath -value $QuteBrowserConfigPath
+}catch{
+  Write-Error ("Error! Could not create Qutebrowser symbolic link")
+}
 
 # Set up registry values
-write-host ("Starting Registry Setup...")
+write-host ("Starting Registry Setup...") @HeaderColor
 
 $Parameters = @{
   Path = "HKLM:\Software\Policies\Microsoft\Windows\WcmSvc\"
@@ -74,9 +103,9 @@ $Property = Get-ItemProperty @Parameters -ErrorAction SilentlyContinue
 if (-not ($Property)){
   try{
     New-ItemProperty @Parameters -Value 0 -PropertyType Dword -Force | Out-Null
-    write-host ("Enabled wifi auto connect when on Ethernet")
+    write-host ("Success! Enabled wifi auto connect when on Ethernet") @SuccessColor
   }catch{
-    Write-Error ("Could not enable wifi auto connect")
+    Write-Error ("Error! Could not enable wifi auto connect")
   }
 }
 
