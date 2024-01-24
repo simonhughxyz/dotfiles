@@ -61,4 +61,19 @@ $QuteBrowserConfigPath = "~/.config/qutebrowser"
 remove-item -force -recurse -confirm:$false -path $QuteBrowserSymlinkPath -ErrorAction SilentlyContinue
 new-item -type SymbolicLink -path $QuteBrowserSymlinkPath -value $QuteBrowserConfigPath
 
+# Set up registry values
+write-host ("Starting Registry Setup...")
+
+$Parameters = @{
+  Path = "HKLM:\Software\Policies\Microsoft\Windows\WcmSvc\"
+  Name = "fMinimizeConnections"
+}
+
+$Property = Get-ItemProperty @Parameters -ErrorAction SilentlyContinue
+
+if (-not ($Property)){
+  write-host ("Enabling wifi auto connect when on Ethernet")
+  New-ItemProperty @Parameters -Value 0 -PropertyType Dword -Force
+}
+
 {{- end -}}
