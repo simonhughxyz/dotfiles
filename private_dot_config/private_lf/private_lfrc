@@ -102,11 +102,11 @@ map \#t :cd ~/Videos/tv
 # ==================== Normal Bindings ===================================
 map . :set hidden!
 map X trash
-map gd push :mkdir<space>
-map gt push :touch<space>
+map a push :mkdir<space>
+map A push :touch<space>
 map gf filter
 map gF setfilter
-map a :select-all
+map ga :select-all
 map P :toggle-preview
 map C :select-all; calcdirsize; unselect
 map T :trash-fzf
