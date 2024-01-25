@@ -28,6 +28,7 @@ cmd touch $touch "$(echo $* | tr ' ' '\ ')"
 cmd setbg $xwallpaper --zoom $f
 cmd select-all :unselect; invert
 cmd batch-rename $printf '%s\n' $fs | vidir
+cmd vim $nvim $PWD
 cmd trash-restore $trash-restore
 cmd trash-fzf $trash-fzf
 cmd detail-mode :set info 'size:time:atime:ctime'
@@ -111,11 +112,7 @@ map C :select-all; calcdirsize; unselect
 map T :trash-fzf
 # renaming files
 map gn push A<c-u> # new rename
-map A rename # at the very end
-map I push A<c-a> # at the very beginning
-map gi push A<a-b><a-b><a-f> # before extention
-map ga push A<a-b> # after extention
-map R :batch-rename
+map R :vim
 # set info bindings
 map i
 map ii :set info
