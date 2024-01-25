@@ -7,7 +7,7 @@ set -C -f
 IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}"
 
 image() {
-    chafa "$1" -f sixel -s "$(($2-2))x$3" | sed 's/#/\n#/g'
+    chafa "$1" --polite on -f sixel -s "$(($2-2))x$3" | sed 's/#/\n#/g'
     exit 0
 }
 
