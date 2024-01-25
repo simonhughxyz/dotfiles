@@ -32,6 +32,7 @@ cmd vim $nvim $PWD
 cmd trash-restore $trash-restore
 cmd trash-fzf $trash-fzf
 cmd detail-mode :set info 'size:time:atime:ctime'
+cmd follow_link %{{ lf -remote "send ${id} select '$(readlink $f)'" }}
 
 cmd toggle-preview ${{
     if $lf_preview; then
@@ -110,6 +111,7 @@ map ga :select-all
 map P :toggle-preview
 map C :select-all; calcdirsize; unselect
 map T :trash-fzf
+map gl follow_link
 # renaming files
 map gn push A<c-u> # new rename
 map R :vim
