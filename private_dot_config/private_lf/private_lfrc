@@ -14,6 +14,7 @@ set previewer '~/.config/lf/previewer'
 set period      3
 set promptfmt "\033[33;1m%F>\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
 set mouse
+set icons
 
 # ==================== Commands ==========================================
 cmd q   quit    # quality of life cmd
