@@ -16,6 +16,10 @@ set promptfmt "\033[33;1m%F>\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
 set mouse
 set icons
 
+# ==================== Local Settings ====================================
+setlocal ~/Videos/ sortby time; set reverse; set info time
+setlocal ~/Downloads/ sortby time; set reverse; set info time
+
 # ==================== Commands ==========================================
 cmd q   quit    # quality of life cmd
 cmd trash $trash-put $fx
