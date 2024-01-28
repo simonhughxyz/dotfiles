@@ -34,6 +34,17 @@ cmd trash-fzf $trash-fzf
 cmd detail-mode :set info 'size:time:atime:ctime'
 cmd follow_link %{{ lf -remote "send ${id} select '$(readlink $f)'" }}
 
+cmd cdff ${{
+  cd $PWD
+  path="$(dirname $(fd . --type=f --max-depth=20 | sort | fzf --track))"
+  lf -remote "send $id cd \"$path\""
+}}
+
+cmd cdfd ${{
+  path="$(fd --type=d | fzf)"
+  lf -remote "send $id cd \"$path\""
+}}
+
 cmd toggle-preview ${{
     if $lf_preview; then
         lf -remote "send $id set nopreview"
@@ -101,6 +112,8 @@ map \#f :cd ~/Videos/film
 map \#t :cd ~/Videos/tv
 
 # ==================== Normal Bindings ===================================
+map <c-s> :toggle; down
+map <c-space> :toggle; down
 map . :set hidden!
 map X trash
 map a push :mkdir<space>
@@ -135,6 +148,11 @@ map ss :set sortby size; set reverse; set info size
 map sS :set sortby size; set noreverse; set info size
 map st :set sortby time; set reverse; set info time
 map sT :set sortby time; set noreverse; set info time
+
+# leader mappings
+map <space>
+map <space>ff :cdff
+map <space>fd :cdfd
 
 # Shortcuts
 # map S :select-all; calcdirsize; unselect; set sortby size; set reverse; set info size
