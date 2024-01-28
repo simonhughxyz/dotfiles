@@ -1,5 +1,5 @@
 --no-check-certificates
---cookies-from-browser chromium
+--cookies-from-browser "chromium:~/.local/share/qutebrowser"
 --audio-format best
 --add-metadata
 --parse-metadata "title:%(title)s [%(channel,uploader,creator|unkown)s]"
