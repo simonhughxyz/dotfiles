@@ -7,8 +7,17 @@ set -C -f
 IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}"
 
 image() {
-    chafa "$1" --polite on -f sixel -s "$(($2-2))x$3" | sed 's/#/\n#/g'
-    exit 0
+  # Check for WSL
+  if [ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ]; then
+    # Check for windows terminal
+    # it does not support sixel yet, see https://github.com/microsoft/terminal/issues/448
+    if [ "$(cmd.exe /c echo %WT_SESSION% 2> /dev/null)" != "%WT_SESSION%" ];then
+      chafa "$1" --polite on -s "$(($2-2))x$3" | sed 's/#/\n#/g'
+      exit 0
+    fi
+  fi
+  chafa "$1" --polite on -f sixel -s "$(($2-2))x$3" | sed 's/#/\n#/g'
+  exit 0
 }
 
 ifub() {
