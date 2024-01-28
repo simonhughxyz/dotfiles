@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Simon H Moore <simon@simonhugh.xyz>
+#
+# Wrapper around xdg-open to override default because xdg-open is broken and annoying
+
+OPENER="/bin/xdg-open"
+TERMINAL="${TERMINAL} -e "
+TERMCMD="${TERMCMD:-$TERMINAL}"
+
+command -v xdg-mime > /dev/null || { echo "error: xdg-mime not found"; exit; }
+command -v "$OPENER" > /dev/null || { echo "error: $OPENER not found"; exit; }
+
+filetype="$( xdg-mime query filetype "$1" )"
+
+case "$filetype" in
+    text/*) nvim "$1" ;;
+    video/*) mpv "$1" ;;
+    audio/*) mpv "$1" ;;
+    image/*) imv "$1" ;;
+    application/pdf) zathura "$1" ;;
+    application/epub+zip) zathura "$1" ;;
+    inode/directory) lf "$1" ;;
+    *) $OPENER $@ ;;
+esac
