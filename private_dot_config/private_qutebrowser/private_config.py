@@ -64,8 +64,12 @@ c.downloads.remove_finished = -1
 
 c.aliases = {
     "h": "help",
-    "w": "session-save",
+    "w": "session-save -o -n",
+    "w!": "session-save -o -n -q",
+    "W": "session-save",
+    "W!": "session-save -q",
     "e": "session-load",
+    "e!": "session-load -t",
     "qa": "quit",
     "wq": "quit --save",
     "cs": "config-source",
@@ -154,6 +158,13 @@ c.content.blocking.hosts.lists = [
     "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 ]
 
+# =====================
+# === Session Config ===
+# =====================
+
+config.bind("sw", "cmd-set-text -s :session-save -o")
+config.bind("se", "cmd-set-text -s :session-load")
+config.bind("ds", "cmd-set-text -s :session-delete")
 
 # =====================
 # === Tabs Config ===
