@@ -27,7 +27,8 @@ c.url.start_pages = ["about:blank"]
 c.zoom.default = 100
 c.content.autoplay = False
 c.content.mute = True
-c.fonts.web.size.minimum = 14
+c.fonts.web.size.minimum = 16
+c.fonts.web.size.default = 18
 c.editor.command = ["st", "-e", "nvim", "-f", "{file}", "-c", "normal{line}G{column0}l"]
 c.content.prefers_reduced_motion = True
 c.content.default_encoding = "utf-8"
@@ -186,7 +187,9 @@ c.colors.tabs.selected.odd.bg = "#bb44cc"
 c.colors.tabs.selected.odd.fg = "#000000"
 
 config.bind("<tab>", "config-cycle -t tabs.show never always")
-config.bind(leader + "b", "cmd-set-text --space :tab-select")
+config.bind(leader + "bb", "tab-focus last")
+config.bind(leader + "bf", "cmd-set-text --space :tab-focus")
+config.bind(leader + "bw", "cmd-set-text --space :tab-select")
 config.bind(leader + ",", "tab-focus last")
 config.bind("<Ctrl+j>", "tab-move +")
 config.bind("<Ctrl+k>", "tab-move -")
