@@ -88,7 +88,7 @@ $QuteBrowserConfigPath = "~/.config/qutebrowser"
 
 remove-item -force -recurse -confirm:$false -path $QuteBrowserSymlinkPath -ErrorAction SilentlyContinue
 try{
-  new-item -type SymbolicLink -path $QuteBrowserSymlinkPath -value $QuteBrowserConfigPath
+  new-item -type SymbolicLink -path $QuteBrowserSymlinkPath -value $QuteBrowserConfigPath | out-null
 }catch{
   Write-Error ("Error! Could not create Qutebrowser symbolic link")
 }
