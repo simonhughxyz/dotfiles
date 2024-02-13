@@ -49,7 +49,7 @@ termclose(title, cmd := "", max := false) {
 
 #+Enter:: term("term:lf", "wsl.exe -- lf ~/", false)
 
-#p:: termclose("term:pass","wsl.exe -- BASH_ENV=~/.config/shell/profile pass menu", false)
+#+p:: termclose("term:pass","wsl.exe -- BASH_ENV=~/.config/shell/profile pass menu", false)
 
 #w::{
   SetTitleMatchMode "RegEx"
