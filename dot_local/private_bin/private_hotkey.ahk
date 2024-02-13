@@ -1,12 +1,12 @@
 #Include drag-mouse.ahk
 
-lastwin := 0
+; lastwin := 0
 
 term(title, cmd := "", max := false) {
   SetTitleMatchMode 3
   if ((WinExist("ahk_class CASCADIA_HOSTING_WINDOW_CLASS")) and (WinExist(title))){
     If WinActive(title){
-        WinMinimize
+      WinMinimize
     }Else{
       WinActivate
     }
@@ -15,8 +15,32 @@ term(title, cmd := "", max := false) {
       RunWait "wt.exe -f nt -M --suppressApplicationTitle --title " . title . " " . cmd
       WinWait(title)
       WinMaximize
+      WinActivate
     }else{
       RunWait "wt.exe -f nt --suppressApplicationTitle --title " . title . " " . cmd
+      WinActivate
+    }
+  }
+}
+
+termclose(title, cmd := "", max := false) {
+  SetTitleMatchMode 3
+  if ((WinExist("ahk_class CASCADIA_HOSTING_WINDOW_CLASS")) and (WinExist(title))){
+    WinClose
+    WinActivate lastwin
+  }else{
+    global lastwin := WinActive("A")
+    if (max){
+      RunWait "wt.exe -f nt -M --suppressApplicationTitle --title " . title . " " . cmd
+      WinWait(title)
+      WinMaximize
+      WinActivate
+    }else{
+      RunWait "wt.exe -f nt --suppressApplicationTitle --title " . title . " " . cmd
+      WinWait(title)
+      WinActivate
+      ; WinWaitClose
+      ; WinActivate lastwin
     }
   }
 }
@@ -25,7 +49,7 @@ term(title, cmd := "", max := false) {
 
 #+Enter:: term("term:lf", "wsl.exe -- lf ~/", false)
 
-#p:: term("term:pass","bash --login -c 'pass menu'", false)
+#p:: termclose("term:pass","wsl.exe -- BASH_ENV=~/.config/shell/profile pass menu", false)
 
 #w::{
   SetTitleMatchMode "RegEx"
