@@ -14,8 +14,9 @@ command -v hostname > /dev/null && export HOST="$( hostname )"
 export GOPATH="$HOME/.local/go"
 export GOBIN="$GOPATH/bin"
 export GOPATH="$GOPATH:$HOME/projects/go"
+export RUSTBIN="$HOME/.cargo/bin"
 export LBIN="$HOME/.local/bin"
-export PATH="$LBIN:$GOBIN:$PATH"
+export PATH="$LBIN:$GOBIN:$RUSTBIN:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -37,7 +38,7 @@ export RIVER_RUNTIME="${XDG_RUNTIME_DIR}/river"
 # NPM
 export NODE_PATH=$NODE_PATH:"$(npm root --location=global)"
 
-# default options
+ default options
 export LANG="en_GB.UTF-8"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export WINEARCH="win64"
@@ -70,6 +71,7 @@ export NMBGIT="$XDG_DATA_HOME/notmuch/nmbug"
 export DOTREMINDERS="$HOME/Documents/remind/init.rem"
 export REMINDFILE="$HOME/Documents/remind/init.rem"
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/starship.toml"
+export W3M_DIR="${XDG_CONFIG_HOME}/w3m"
 
 # # LESS
 export LESS=-R
