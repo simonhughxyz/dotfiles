@@ -8,6 +8,11 @@ OPENER="/bin/xdg-open"
 TERMINAL="${TERMINAL} -e "
 TERMCMD="${TERMCMD:-$TERMINAL}"
 
+# Check for WSL
+if [ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ]; then
+  wslview "$1"
+fi
+
 command -v xdg-mime > /dev/null || { echo "error: xdg-mime not found"; exit; }
 command -v "$OPENER" > /dev/null || { echo "error: $OPENER not found"; exit; }
 

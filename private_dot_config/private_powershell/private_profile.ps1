@@ -8,6 +8,18 @@ $modules = @(
 )
 $modules | foreach-object { import-module $_ }
 
+# Set Eviroment Variables
+$ENV:FZF_DEFAULT_COMMAND = "rg --files --hidden --smart-case --glob '!.git/*'"
+$ENV:FZF_DEFAULT_OPTS = " `
+    --cycle `
+    --reverse `
+    --info=hidden `
+    --border `
+    --padding=0 `
+    --margin=0 `
+    --color=border:129,fg+:129:bold `
+    --bind=ctrl-space:print-query,ctrl-b:backward-kill-word,ctrl-w:kill-word,alt-b:backward-word,alt-w:forward-word,ctrl-j:down,ctrl-k:up,ctrl-p:toggle-preview,ctrl-g:top,ctrl-a:end-of-line,ctrl-i:beginning-of-line,ctrl-d:clear-query,ctrl-h:deselect-all,ctrl-f:jump,ctrl-s:toggle,ctrl-a:toggle-all,tab:replace-query"
+
 # Alias & shortcut functions
 Set-Alias -Name dot -Value chezmoi
 Set-Alias -Name ll -Value Get-ChildItem
