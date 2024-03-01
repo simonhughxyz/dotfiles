@@ -29,8 +29,12 @@
     r  = restore
     sp  = log --all --graph --decorate --oneline --simplify-by-decoration
     lg  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    d  = diff
+    d = diff
     ds = diff --staged
+    dt = difftool
+    dts = difftool --staged
 
 [credential]
 	helper = cache
+[difftool "vimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
