@@ -202,9 +202,10 @@ export LEDGER_FILE=toc.ledger
 # - tmux is installed.
 # - not already running.
 # - shell is interactive.
-#if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [[ $- = *i* ]]; then
-#    # Always run tmux in base session.
-#    tmux attach -t base || tmux new -s base
-#fi
+if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [[ $- = *i* ]]; then
+   # Always run tmux in base session.
+   tmux attach -t master || tmux new -s master
+   exit
+fi
 
 eval "$(starship init zsh)"
