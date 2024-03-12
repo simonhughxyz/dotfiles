@@ -51,6 +51,8 @@ termclose(title, cmd := "", max := false) {
 
 #+p:: termclose("term:pass","wsl.exe -- BASH_ENV=~/.config/shell/profile pass menu", false)
 
+#@:: SendText("simonm@vigoitsolutions.com")
+
 #w::{
   SetTitleMatchMode "RegEx"
   if ((WinExist("ahk_class Chrome_WidgetWin_1")) and (WinExist("Vieb.*"))){
