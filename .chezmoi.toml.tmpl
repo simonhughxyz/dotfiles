@@ -1,7 +1,5 @@
-{{- $email := promptString "email" -}}
-
 [data]
-    email = "{{ $email }}"
+    email = "simon@simonhugh.xyz"
     name = "Simon H Moore"
     username = "simonhugh"
     {{ if eq .chezmoi.os "linux" }}
