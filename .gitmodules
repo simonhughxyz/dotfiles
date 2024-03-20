@@ -1,4 +1,0 @@
-[submodule "private_dot_config/external_nvim"]
-  path = private_dot_config/external_nvim
-  url = git@github.com:simonhughxyz/NeovimConfig.git
-  branch = master
