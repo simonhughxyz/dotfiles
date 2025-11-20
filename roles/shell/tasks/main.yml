@@ -1,0 +1,26 @@
+---
+- name: Create the '$HOME/.config/shell' directory if not exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/shell"
+    mode: u=rwx,g=,o=
+    state: directory
+
+- name: Copy profile bootstrap file
+  ansible.builtin.copy:
+    src: ".profile"
+    dest: "{{ home }}/.profile"
+    mode: u=rwx,g=,o=
+    force: yes
+
+- name: Copy shell files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/shell/{{ item }}"
+    mode: u=rwx,g=,o=
+    force: yes
+  loop:
+    - .zprofile
+    - .zshrc
+    - alias.sh
+    - alias.zsh
+    - profile

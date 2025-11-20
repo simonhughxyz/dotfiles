@@ -33,6 +33,8 @@
 
 
   roles:
+    - role: shell
+
     - role: git
 
     - role: river
