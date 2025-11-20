@@ -1,0 +1,78 @@
+{
+  "layer": "top"
+  "position": "top"
+  "height": 10
+
+  "modules-left": [
+		"river/tags",
+		"river/window",
+	],
+
+  "modules-right": [
+		"network",
+		"memory",
+		"wireplumber",
+		"custom/date",
+		"custom/time",
+		"battery",
+	],
+
+  "river/tags": {
+    "num-tags": 22,
+    "expand": true,
+    "hide-vacant": true,
+  },
+
+
+  "network": {
+    "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{ifname}",
+    "format-ethernet": "<span font='16' rise='-1500'>{icon}</span>",
+    "format-wifi": "<span font='16' rise='-1500'>{icon}</span>",
+    "format-icons": [""],
+    "interval": 30
+  },
+
+  "wireplumber": {
+    "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{volume}%",
+    "format-muted": "",
+    "format-icons": ["", "", ""],
+    "interval": 30
+  },
+
+  "memory": {
+    "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{used}",
+    "format-icons": [""],
+    "interval": 30
+  },
+
+  "custom/time": {
+    "exec": "date '+%H:%M'",
+    "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{text}",
+    "format-icons": [""],
+    "interval": 30
+  },
+
+  "custom/date": {
+    "exec": "date '+%Y-%m-%d'",
+    "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{text}",
+    "format-icons": [""],
+    "interval": 30
+  },
+
+  "battery": {
+    "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "interval": 60,
+    "states": {
+          "normal": 100,
+          "warning": 30,
+          "critical": 10
+    },
+    "events": {
+          "on-discharging-warning": "notify-send -u normal 'Low Battery'",
+          "on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
+          "on-charging-100": "notify-send -u normal 'Battery Full!'"
+    },
+  },
+
+}
