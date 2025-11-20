@@ -1,0 +1,32 @@
+#!/bin/sh
+
+
+
+#brightness
+cmd_brightness(){
+    xbacklight $1
+    riverctl enter-mode normal
+}
+
+# Volume
+cmd_volume(){
+    case "$1" in
+        mute) eval "volume -m" ;; 
+        *) eval "volume $1" ;;
+    esac
+}
+
+focus_tags(){
+    current_tag="$( cat "${RIVER_RUNTIME}/current_tags" )"
+    if [ "$current_tag" = "$1" ]; then
+        riverctl focus-previous-tags
+    else
+        riverctl set-focused-tags "$2"
+    fi
+}
+
+case "$1" in
+    brightness) cmd_brightness "$2";;
+    volume) cmd_volume $2;;
+    focus_tags) shift; focus_tags "$1" "$2";;
+esac

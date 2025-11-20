@@ -1,0 +1,41 @@
+#!/bin/sh
+
+LOG_PREFIX=~/.local/share
+
+# create log directory and return full log path
+_log(){
+    path="${LOG_PREFIX}/${1}"
+    mkdir -p "${path}"
+    echo "${path}/${2:-${1}}.log"
+}
+
+# export "$(dbus-launch)"
+# echo "$DBUS_SESSION_BUS_ADDRESS" > ~/dbus_address.winit
+# echo "$DBUS_SESSION_BUS_PID" > ~/dbus_pid.winit
+# dbus-launch > ~/dbus-launch.winit
+# eval `dbus-launch --sh-syntax`
+
+pipewire > "$( _log "pipewire" )" 2>&1 &
+pipewire-pulse > "$( _log "pipewire" "pipewire-pulse" )" 2>&1 &
+wireplumber > "$( _log "wireplumber" )" 2>&1 &
+# wl-paste --watch clipman store --unix --max-items=100 > "$( _log "clipman" "clipman-store.log" )" 2>&1 &
+# exec wl-paste --watch clipman store --no-persist 1>> "$( _log "clipman" )" 2>&1 &
+# exec wl-paste --primary --watch clipman store --no-persist --histpath="~/.local/share/clipman/primary.json" 1>> "$( _log "clipman" "primary" )" 2>&1 &
+# exec wl-paste --primary --watch cliphist store > "$( _log "cliphist" )" 2>&1 &
+# wl-paste --watch cliphist store > "$( _log "cliphist" )" 2>&1 &
+
+
+syncthing -no-browser > "$( _log "syncthing" )" 2>&1 & # syncs files between devises.
+# protonmail-bridge --log-level debug --no-window --noninteractive > "$( _log "protonmail-bridge" )" 2>&1 & # get mail from protonmail
+dunst > "$( _log "dunst" )" 2>&1 &   # for notification.
+# bluetoothctl power on                         # Switch on bluetooth.
+# /usr/lib64/libexec/kdeconnectd > "$( _log "kdeconnect" "kdeconnectd" )" 2>&1 &
+rem -z -k'notify-send "Reminder" "%s"' > "$( _log "remind" )" 2>&1 &
+
+gotify-dunst > "$( _log "gotify-dunst" )" 2>&1 &
+
+# mako > "$( _log "mako" )" 2>&1 &
+gammastep > "$( _log "gammastep" )" 2>&1 & 
+# ~/.local/bin/lock
+# somestatus run > "$( _log "somestatus" )" 2>&1 & 
+# someblocks > "$( _log "someblocks" )" 2>&1 & 

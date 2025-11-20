@@ -34,3 +34,6 @@
 
   roles:
     - role: git
+
+    - role: river
+      when: ansible_facts['os_family'] in supported_distros and is_gui
