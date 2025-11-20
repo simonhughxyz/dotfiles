@@ -1,7 +1,6 @@
 ---
 - name: Configure system
   hosts: all
-  become: true
   tasks:
     - name: Print the OS family
       ansible.builtin.debug:
@@ -26,6 +25,7 @@
       when: is_gui | default(false)
 
     - name: Install packages
+      become: true
       ansible.builtin.package:
         name: "{{ packages_to_install }}"
         state: present
