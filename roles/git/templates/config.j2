@@ -1,0 +1,60 @@
+[user]
+	email = {{ git.email }}
+	name = {{ git.name }}
+  username = {{ git.username }}
+	signingkey = ~/.ssh/id_ed25519
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/git/allowed_signers
+
+[diff]
+	tool = vimdiff
+
+[difftool]
+	prompt = false
+
+[alias]
+    s   = status
+    P  = pull
+    pl  = pull
+    p  = push
+    pa = !git remote | xargs -L1 git push
+    paa = !git remote | xargs -L1 git push --all
+    c  = commit
+    a = add
+    ca  = commit --amend
+    b   = branch
+    f   = fetch
+    m   = merge
+    C   = checkout
+    Cb   = checkout -b
+    CB   = checkout -b
+    Cm  = checkout master
+    CM  = checkout master
+    sw = switch
+    r  = restore
+    sp  = log --all --graph --decorate --oneline --simplify-by-decoration
+    lg  = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    d = diff
+    ds = diff --staged
+    dt = difftool
+    dts = difftool --staged
+    refresh = !git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+    refreshmaster = !git fetch origin && git reset --hard origin/$(git remote show origin | awk '/HEAD branch/ {print $NF}')
+    wipe = clean -fd
+    wipex = clean -xfd
+
+[credential]
+	helper = cache
+
+[difftool "vimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	format = ssh
+
+[includeIf "gitdir:~/Work/"]
+  path = ./config-work

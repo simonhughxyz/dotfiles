@@ -30,3 +30,7 @@
         name: "{{ packages_to_install }}"
         state: present
         update_cache: yes
+
+
+  roles:
+    - role: git

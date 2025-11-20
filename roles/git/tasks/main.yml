@@ -1,0 +1,24 @@
+---
+- name: Create the '$HOME/.config/git' directory if not exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/git"
+    mode: "0755"
+    state: directory
+
+- name: Copy git ingore file
+  ansible.builtin.copy:
+    src: "ignore"
+    dest: "{{ home }}/.config/git/ignore"
+    force: yes
+
+- name: Template git config
+  ansible.builtin.template:
+    src: config.j2
+    dest: "{{ home }}/.config/git/config"
+    mode: "0644"
+
+- name: Template git work config
+  ansible.builtin.template:
+    src: config-work.j2
+    dest: "{{ home }}/.config/git/config-work"
+    mode: "0644"
