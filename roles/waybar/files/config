@@ -1,7 +1,7 @@
 {
-  "layer": "top"
-  "position": "top"
-  "height": 10
+  "layer": "top",
+  "position": "top",
+  "height": 10,
 
   "modules-left": [
 		"river/tags",
