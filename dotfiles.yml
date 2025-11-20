@@ -1,0 +1,32 @@
+---
+- name: Configure system
+  hosts: all
+  become: true
+  tasks:
+    - name: Print the OS family
+      ansible.builtin.debug:
+        msg: "OS family is {{ ansible_facts['os_family'] }}"
+
+    - name: Determine packages to install
+      set_fact:
+        packages_to_install: >-
+          {{
+            (packages.linux if ansible_facts['os_family'] in supported_distros else [])
+            + (packages[ansible_facts['os_family']|lower] | default([]))
+          }}
+
+    - name: Determine GUI packages to install
+      set_fact:
+        packages_to_install: >-
+          {{
+            packages_to_install
+            + (packages.GUI.linux if ansible_facts['os_family'] in supported_distros else [])
+            + (packages.GUI[ansible_facts['os_family']|lower] | default([]))
+          }}
+      when: is_gui | default(false)
+
+    - name: Install packages
+      ansible.builtin.package:
+        name: "{{ packages_to_install }}"
+        state: present
+        update_cache: yes
