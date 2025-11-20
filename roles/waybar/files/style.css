@@ -31,6 +31,7 @@
 
 #window {
   color: #bb00ff;
+  padding-left: 10px;
 }
 
 #window.focused {
