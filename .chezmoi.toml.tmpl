@@ -1,9 +1,0 @@
-[data]
-    email = "simon@simonhugh.xyz"
-    name = "Simon H Moore"
-    username = "simonhugh"
-    {{ if eq .chezmoi.os "linux" }}
-        is_wsl = {{ (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-    {{ else }}
-        is_wsl = false
-    {{ end }}
