@@ -32,14 +32,20 @@
         update_cache: yes
 
 
-  roles:
-    - role: shell
+    - name: Install shell config
+      include_role:
+        name: shell
 
-    - role: git
+    - name: Install git config
+      include_role:
+        name: git
 
-    - role: river
+    - name: Install river config
+      include_role:
+        name: river
       when: ansible_facts['os_family'] in supported_distros and is_gui
 
-    - role: waybar
+    - name: Install waybar config
+      include_role:
+        name: waybar
       when: ansible_facts['os_family'] in supported_distros and is_gui
-
