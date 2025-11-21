@@ -521,11 +521,11 @@ fi
 set_background
 
 
-if [ -f "$XDG_RUNTIME_DIR/work_mode" ]; then
-  work_mode="$( cat "$XDG_RUNTIME_DIR/work_mode" )"
-else
-  work_mode="normal"
-fi
+# if [ -f "$XDG_RUNTIME_DIR/work_mode" ]; then
+#   work_mode="$( cat "$XDG_RUNTIME_DIR/work_mode" )"
+# else
+#   work_mode="normal"
+# fi
 
 case "$work_mode" in
   audiebant) cd ~/Audiebant;;
