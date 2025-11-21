@@ -23,6 +23,8 @@ setopt HIST_REDUCE_BLANKS     # remove blank lines from history
 # Set default permission
 umask 077 # leads to 600 for files and 700 for directories
 
+source ~/.config/shell/profile
+
 # Prompt
 # Git status
 prompt_git_status() {
@@ -187,7 +189,7 @@ _source ~/.fzf.zsh
 # Load zsh-syntax-highlighting; should be last.
 # _source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
-source ~/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 
 zplug "reegnz/jq-zsh-plugin"
 zplug "zsh-users/zsh-autosuggestions"
@@ -531,6 +533,5 @@ case "$work_mode" in
   audiebant) cd ~/Audiebant;;
 esac
 
-source ~/.config/shell/profile
 
 eval "$(starship init zsh)"

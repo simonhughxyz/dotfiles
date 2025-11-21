@@ -24,3 +24,9 @@
     - alias.sh
     - alias.zsh
     - profile
+
+- name: Ensure zplug is installed
+  ansible.builtin.git:
+    repo: https://github.com/zplug/zplug.git
+    dest: "{{ home }}/.cache/shell/zplug"
+    update: yes
