@@ -53,3 +53,8 @@
       include_role:
         name: waybar
       when: ansible_facts['os_family'] in supported_distros and is_gui
+
+    - name: Install dunst config
+      include_role:
+        name: dunst
+      when: ansible_facts['os_family'] in supported_distros and is_gui
