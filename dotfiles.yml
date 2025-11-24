@@ -40,6 +40,10 @@
       include_role:
         name: git
 
+    - name: Install fontconfig config
+      include_role:
+        name: fontconfig
+
     - name: Install river config
       include_role:
         name: river
