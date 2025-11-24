@@ -1,0 +1,42 @@
+---
+- name: Create the '$HOME/.config/mpv' directory if not exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/mpv"
+    mode: u=rwx,g=,o=
+    state: directory
+
+- name: Create the '$HOME/.config/mpv/*' directories if not exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/mpv/{{ item }}"
+    mode: u=rwx,g=,o=
+    state: directory
+  loop:
+    - script-modules
+    - script-opts
+    - scripts
+
+- name: Copy mpv files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/mpv/{{ item }}"
+    mode: u=rw,g=,o=
+    force: yes
+  loop:
+    - input.conf
+    - mpv.conf
+
+    - script-modules/user-input-module.lua
+
+    - script-opts/console.conf
+    - script-opts/reload.conf
+    - script-opts/user_input.conf
+
+    - scripts/notify.lua
+    - scripts/osc-toggle.lua
+    - scripts/reload-file.lua
+    - scripts/reload.lua
+    - scripts/rename.lua
+    - scripts/slice.lua
+    - scripts/thumbnail.lua
+    - scripts/user-input.lua
+    - scripts/yank-title.lua
