@@ -44,6 +44,10 @@
       include_role:
         name: fontconfig
 
+    - name: Install aria2 config
+      include_role:
+        name: aria2
+
     - name: Install river config
       include_role:
         name: river

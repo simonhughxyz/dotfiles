@@ -12,6 +12,7 @@ packages:
     - jq
     - bottom
     - htop
+    - aria2
 
   GUI:
     linux:
