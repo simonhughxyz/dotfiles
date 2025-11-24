@@ -40,6 +40,10 @@
       include_role:
         name: git
 
+    - name: Install Neovim config
+      include_role:
+        name: nvim
+
     - name: Install fontconfig config
       include_role:
         name: fontconfig

@@ -13,6 +13,7 @@ packages:
     - bottom
     - htop
     - aria2
+    - neovim
 
   GUI:
     linux:
