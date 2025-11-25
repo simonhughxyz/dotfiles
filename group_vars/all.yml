@@ -23,6 +23,9 @@ packages:
       - Waybar
       - dunst
       - mpv
+      - zathura
+      - zathura-pdf-mupdf
+      - zathura-ps
 
 
 git:
