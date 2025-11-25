@@ -1,0 +1,7 @@
+---
+- name: Clone password-store into {{ home }}/.config/password-store
+  git:
+    repo: "git@mo-net.lan:password-store.git"
+    dest: "{{ home }}/.config/password-store"
+    version: "master"
+    update: yes

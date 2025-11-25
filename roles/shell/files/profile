@@ -43,7 +43,7 @@ export NODE_PATH=$NODE_PATH:"$(npm root --location=global)"
  # default options
 export LANG="en_GB.UTF-8"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
-export PASSWORD_STORE_DIR="${HOME}/Documents/.password-store"
+export PASSWORD_STORE_DIR="${XDG_CONFIG_HOME}/password-store"
 export WINEARCH="win64"
 export WINEPREFIX="/home/simon/.wine/lutris64 setup_dxvk64"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --smart-case --glob '!.git/*'"

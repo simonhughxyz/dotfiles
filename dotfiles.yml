@@ -44,6 +44,10 @@
       include_role:
         name: nvim
 
+    - name: Install password-store
+      include_role:
+        name: password-store
+
     - name: Install fontconfig config
       include_role:
         name: fontconfig
