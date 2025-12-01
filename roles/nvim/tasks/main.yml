@@ -1,4 +1,12 @@
 ---
+- name: Stash current changes if any
+  command: git stash push -m "Stashed by ansible dotfiles"
+  args:
+    chdir: "{{ home }}/.config/nvim"
+  register: stash_output
+  failed_when: false
+  changed_when: "'Saved working directory' in stash_output.stdout"
+
 - name: Clone NeovimConfig into {{ home }}/.config/nvim
   git:
     repo: "git@github.com:simonhughxyz/NeovimConfig.git"
