@@ -14,6 +14,11 @@
     version: "master"
     update: yes
 
+- name: Ensure lua folder is deleted
+  ansible.builtin.file:
+    path: "{{ home }}/.config/nvim/lua"
+    state: absent
+
 - name: Tangle norg config
   command: "nvim -n --headless -c 'edit config.norg' -c 'Neorg tangle current-file' -c 'qa'"
   args:
