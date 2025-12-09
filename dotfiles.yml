@@ -48,6 +48,10 @@
       include_role:
         name: password-store
 
+    - name: Install starship config
+      include_role:
+        name: starship
+
     - name: Install fontconfig config
       include_role:
         name: fontconfig

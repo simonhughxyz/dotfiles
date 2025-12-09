@@ -15,6 +15,7 @@ packages:
     - aria2
     - neovim
     - pass
+    - starship
 
   GUI:
     linux:
