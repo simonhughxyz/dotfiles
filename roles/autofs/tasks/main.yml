@@ -1,0 +1,47 @@
+---
+- name: Create the '/etc/autofs' directory if not exists
+  ansible.builtin.file:
+    path: "/etc/autofs"
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+  become: true
+
+- name: Copy autofs config files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/autofs/{{ item }}"
+    mode: u=rw,g=r,o=r
+    force: yes
+  become: true
+  loop:
+    - auto.master
+    - auto.lunar
+
+
+- name: Create the '/etc/creds' directory if not exists
+  ansible.builtin.file:
+    path: "/etc/creds"
+    mode: u=rwx,g=,o=
+    owner: root
+    group: root
+    state: directory
+  become: true
+
+- name: Render credential files
+  ansible.builtin.template:
+    src: credentials.j2
+    dest: "/etc/creds/{{ credential.name }}"
+    mode: u=rw,g=,o=
+    owner: root
+    group: root
+  loop: "{{ etc.credentials }}"
+  loop_control:
+    loop_var: credential
+  no_log: true
+  become: true
+
+- name: Restart autofs
+  ansible.builtin.service:
+    name: autofs
+    state: restarted
+  become: true

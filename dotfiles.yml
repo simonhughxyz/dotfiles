@@ -84,3 +84,7 @@
       include_role:
         name: mpv
       when: ansible_facts['os_family'] in supported_distros and is_gui
+
+    - name: Install autofs config
+      include_role:
+        name: autofs

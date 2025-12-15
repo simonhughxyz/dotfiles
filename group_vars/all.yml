@@ -16,6 +16,7 @@ packages:
     - neovim
     - pass
     - starship
+    - autofs
 
   GUI:
     linux:

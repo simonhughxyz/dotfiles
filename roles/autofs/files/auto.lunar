@@ -1,0 +1,1 @@
+simon   -fstype=cifs,rw,vers=3.0,credentials=/etc/creds/lunar.simon ://lunar.mo-net.lan/home
