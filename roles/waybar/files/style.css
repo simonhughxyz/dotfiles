@@ -30,7 +30,7 @@
 }
 
 #window {
-  color: #bb00ff;
+  color: #ffffff;
   padding-left: 10px;
 }
 
@@ -78,4 +78,44 @@
 
 #battery.discharging {
   color: #bb00ff;
+}
+
+
+#workspaces {
+  background-color: #000000;
+  background: none;
+  color: #bb00ff;
+}
+
+#workspaces button {
+  padding: 0;
+  color: #bb00ff;
+}
+
+/* focused workspace (keyboard focus) */
+#workspaces button.focused {
+  background: #9000ff;
+  color: #ffffff;
+}
+
+/* active workspace (visible on output) */
+#workspaces button.active {
+  color: #ffffff;
+}
+
+/* urgent workspace */
+#workspaces button.urgent {
+  background-color: #cc241d;
+  color: #ffffff;
+}
+
+/* empty workspaces */
+#workspaces button.empty {
+  color: #bb00ff;
+  opacity: 0.6;
+}
+
+/* workspaces on the same output as the bar */
+#workspaces button.current_output {
+  opacity: 1;
 }

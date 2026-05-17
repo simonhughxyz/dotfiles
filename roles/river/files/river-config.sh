@@ -25,18 +25,17 @@ riverctl map normal $mod k focus-view previous
 riverctl map normal $mod l spawn "flow cycle-tags next"
 riverctl map normal $mod h spawn "flow cycle-tags previous"
 
-riverctl map normal $mod u toggle-focused-tags ${scratch_tag}
 riverctl map normal $mod z spawn "wl-kbptr"
 
 # The scratchpad will live on an unused tag. Which tags are used depends on your
 # config, but rivers default uses the first 9 tags.
-scratch_tag=$((1 << 32 ))
+scratch_tag=$((1 << 23 ))
 
 # Toggle the scratchpad with Super+P
-riverctl map normal Super u toggle-focused-tags ${scratch_tag}
+riverctl map normal $mod semicolon toggle-focused-tags ${scratch_tag}
 
 # Send windows to the scratchpad with Super+Shift+P
-riverctl map normal Super+Shift u set-view-tags ${scratch_tag}
+riverctl map normal $mod+Shift semicolon set-view-tags ${scratch_tag}
 
 # Set spawn tagmask to ensure new windows don't have the scratchpad tag unless
 # explicitly set.
@@ -64,7 +63,7 @@ riverctl map normal $mod g enter-mode g
 riverctl map g $mod escape enter-mode normal
 riverctl map g $mod bracketleft enter-mode normal
 riverctl map g $mod+Control bracketleft enter-mode normal
-riverctl map g $mod a spawn 'echo "audiebant" > "$XDG_RUNTIME_DIR/work_mode"'
+riverctl map g $mod w spawn 'echo "work" > "$XDG_RUNTIME_DIR/work_mode"'
 riverctl map g $mod n spawn 'echo "normal" > "$XDG_RUNTIME_DIR/work_mode"'
 
 
@@ -78,6 +77,7 @@ riverctl map normal $mod numbersign spawn "$( termcmd "fdunst" "fdunst" "fdunst"
 
 # Mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal $mod Return spawn "/bin/foot -a 'term' /usr/bin/zsh"
+riverctl map normal $mod+Control Return spawn "/bin/foot -a 'term' /usr/bin/bash"
 riverctl map normal Control+Mod1 delete spawn "$( termcmd "powermenu" "Power" "powermenu" )"
 riverctl map normal $mod X spawn "lock"
 
@@ -132,12 +132,12 @@ done
 
 # Mod+Shift+J and Mod+Shift+K to swap the focused view with the next/previous
 # view in the layout stack
-riverctl map normal $mod+Ctrl L swap next
-riverctl map normal $mod+Ctrl H swap previous
+riverctl map normal $mod+Control L swap next
+riverctl map normal $mod+Control H swap previous
 riverctl map normal $mod Tab focus-previous-tags
-riverctl map normal $mod+Ctrl Tab send-to-previous-tags
+riverctl map normal $mod+Control Tab send-to-previous-tags
 riverctl map normal $mod BackSpace focus-previous-tags
-riverctl map normal $mod+Ctrl BackSpace send-to-previous-tags
+riverctl map normal $mod+Control BackSpace send-to-previous-tags
 
 # # Mod+Period and Mod+Comma to focus the next/previous output
 # riverctl map normal $mod Period focus-output next

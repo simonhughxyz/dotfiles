@@ -1,0 +1,36 @@
+---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ qutebrowser_packages }}"
+
+- name: Create the '$HOME/.config/qutebrowser' directory if not exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/qutebrowser"
+    mode: u=rwx,g=,o=
+    state: directory
+
+
+- name: Create the '$HOME/.config/qutebrowser/css' directory if not exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/qutebrowser/css"
+    mode: u=rwx,g=,o=
+    state: directory
+
+- name: Copy qutebrowser files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/qutebrowser/{{ item }}"
+    mode: u=rwx,g=,o=
+    force: yes
+  loop:
+    - config.py
+    - css/custom-dark.css
+    - css/gruvbox-all-sites.css

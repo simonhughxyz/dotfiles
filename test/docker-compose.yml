@@ -1,0 +1,26 @@
+services:
+  wayland-app:
+    build:
+      context: .
+      args:
+        HOST_UID: "1000"
+        HOST_GID: "1000"
+        HOST_USER: "simon"
+    image: wayland-test
+    container_name: wayland-app
+    # Keep UID/GID consistent with host (important for rootless)
+    user: "${UID}:${GID}"
+    environment:
+      WAYLAND_DISPLAY: "${WAYLAND_DISPLAY}"
+      XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR}"
+      DBUS_SESSION_BUS_ADDRESS: "unix:path=${XDG_RUNTIME_DIR}/bus"
+      PIPEWIRE_REMOTE: "pipewire-0"
+    volumes:
+      - "${XDG_CONFIG_HOME}:${XDG_CONFIG_HOME}"
+      - "${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}"
+      - "/dev/dri:/dev/dri"        # GPU access
+      - "/dev/input:/dev/input"    # Optional: for apps reading input directly
+    security_opt:
+      - label=disable              # Required on SELinux hosts
+    tty: true
+    stdin_open: true

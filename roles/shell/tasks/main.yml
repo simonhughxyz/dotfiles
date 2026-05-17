@@ -1,4 +1,16 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ shell_packages }}"
+
 - name: Create the '$HOME/.config/shell' directory if not exists
   ansible.builtin.file:
     path: "{{ home }}/.config/shell"
@@ -25,8 +37,24 @@
     - alias.zsh
     - profile
 
-- name: Ensure zplug is installed
-  ansible.builtin.git:
-    repo: https://github.com/zplug/zplug.git
-    dest: "{{ home }}/.cache/shell/zplug"
+- name: Ensure zsh plugin directory exists
+  file:
+    path: "{{ zsh_plugins_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Install or update zsh plugins
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ zsh_plugins_dir }}/{{ item.name }}"
+    version: "{{ item.version | default('HEAD') }}"
     update: yes
+  loop: "{{ zsh_plugins }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Generate plugin loader
+  template:
+    src: plugin-list.zsh.j2
+    dest: "{{ zsh_plugin_config }}"
+    mode: "0644"

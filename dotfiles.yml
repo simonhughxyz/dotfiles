@@ -1,90 +1,71 @@
 ---
-- name: Configure system
+- name: Bootstrap system
   hosts: all
+  tags: [bootstrap]
   tasks:
     - name: Print the OS family
       ansible.builtin.debug:
         msg: "OS family is {{ ansible_facts['os_family'] }}"
 
-    - name: Determine packages to install
-      set_fact:
-        packages_to_install: >-
-          {{
-            (packages.linux if ansible_facts['os_family'] in supported_distros else [])
-            + (packages[ansible_facts['os_family']|lower] | default([]))
-          }}
+    - name: Create user
+      ansible.builtin.include_role:
+        name: user
 
-    - name: Determine GUI packages to install
-      set_fact:
-        packages_to_install: >-
-          {{
-            packages_to_install
-            + (packages.GUI.linux if ansible_facts['os_family'] in supported_distros else [])
-            + (packages.GUI[ansible_facts['os_family']|lower] | default([]))
-          }}
-      when: is_gui | default(false)
+- name: Configure user
+  hosts: all
+  vars:
+    home: "/home/{{ user.name }}"
+  tasks:
+    - name: Apply user roles
+      ansible.builtin.include_role:
+        name: "{{ role_name }}"
+        apply:
+          become: true
+          become_user: "{{ user.name }}"
+          tags:
+            - "{{ role_name }}"
+      loop: "{{ user.roles | default([]) }}"
+      loop_control:
+        loop_var: role_name
+        label: "{{ role_name }}"
+      tags: [always]
 
-    - name: Install packages
-      become: true
-      ansible.builtin.package:
-        name: "{{ packages_to_install }}"
-        state: present
-        update_cache: yes
-
-
-    - name: Install shell config
-      include_role:
-        name: shell
-
-    - name: Install git config
-      include_role:
-        name: git
-
-    - name: Install Neovim config
-      include_role:
-        name: nvim
-
-    - name: Install password-store
-      include_role:
-        name: password-store
-
-    - name: Install starship config
-      include_role:
-        name: starship
-
-    - name: Install fontconfig config
-      include_role:
-        name: fontconfig
-
-    - name: Install aria2 config
-      include_role:
-        name: aria2
-
-    - name: Install river config
-      include_role:
-        name: river
-      when: ansible_facts['os_family'] in supported_distros and is_gui
+- name: Configure system
+  hosts: all
+  vars:
+    home: "/home/{{ user.name }}"
+  tasks:
+    - name: Install niri config
+      ansible.builtin.include_role:
+        name: niri
+      when: is_gui
+      tags: [system, gui, niri]
 
     - name: Install waybar config
-      include_role:
+      ansible.builtin.include_role:
         name: waybar
-      when: ansible_facts['os_family'] in supported_distros and is_gui
+      when: is_gui
+      tags: [system, gui, waybar]
 
     - name: Install dunst config
-      include_role:
+      ansible.builtin.include_role:
         name: dunst
-      when: ansible_facts['os_family'] in supported_distros and is_gui
+      when: is_gui
+      tags: [system, gui, dunst]
 
     - name: Install zathura config
-      include_role:
+      ansible.builtin.include_role:
         name: zathura
-      when: ansible_facts['os_family'] in supported_distros and is_gui
+      when: is_gui
+      tags: [system, gui, zathura]
 
     - name: Install mpv config
-      include_role:
+      ansible.builtin.include_role:
         name: mpv
-      when: ansible_facts['os_family'] in supported_distros and is_gui
+      when: is_gui
+      tags: [system, gui, mpv]
 
     - name: Install autofs config
-      include_role:
+      ansible.builtin.include_role:
         name: autofs
+      tags: [system, autofs]

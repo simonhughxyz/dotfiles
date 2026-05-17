@@ -4,8 +4,8 @@
   "height": 10,
 
   "modules-left": [
-		"river/tags",
-		"river/window",
+		"niri/workspaces",
+		"niri/window",
 	],
 
   "modules-right": [
@@ -53,7 +53,7 @@
   },
 
   "custom/date": {
-    "exec": "date '+%Y-%m-%d'",
+    "exec": "date '+%a %Y-%m-%d'",
     "format": "<span font='11' font_family='sans-serif' rise='0'>{icon}  </span>{text}",
     "format-icons": [""],
     "interval": 30

@@ -1,0 +1,5 @@
+---
+river_packages:
+  - river
+  - wayland
+  - wlroots

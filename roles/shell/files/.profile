@@ -8,3 +8,4 @@ if [ -z "$XDG_CONFIG_HOME" ];then
 fi
 
 source "$XDG_CONFIG_HOME/shell/profile"
+. "/home/simon/.deno/env"

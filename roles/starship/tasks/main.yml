@@ -1,4 +1,25 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ starship_packages }}"
+
+- name: Install starship via installer script
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
+  args:
+    creates: /usr/local/bin/starship
+  become: true
+  become_user: root
+  when: starship_packages | length == 0
+
 - name: Create the '$HOME/.config/starship' directory if not exists
   ansible.builtin.file:
     path: "{{ home }}/.config/starship"

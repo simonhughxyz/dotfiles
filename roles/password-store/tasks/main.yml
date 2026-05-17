@@ -1,7 +1,20 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ password_store_packages }}"
+
 - name: Clone password-store into {{ home }}/.config/password-store
-  git:
+  ansible.builtin.git:
     repo: "git@mo-net.lan:password-store.git"
     dest: "{{ home }}/.config/password-store"
     version: "master"
     update: yes
+    accept_hostkey: yes

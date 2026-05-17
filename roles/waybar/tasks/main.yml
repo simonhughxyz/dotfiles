@@ -1,4 +1,16 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ waybar_packages }}"
+
 - name: Create the '$HOME/.config/waybar' directory if not exists
   ansible.builtin.file:
     path: "{{ home }}/.config/waybar"
@@ -14,3 +26,4 @@
   loop:
     - config
     - style.css
+  notify: reload waybar

@@ -1,4 +1,16 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ aria2_packages }}"
+
 - name: Create the '$HOME/.config/aria2' directory if not exists
   ansible.builtin.file:
     path: "{{ home }}/.config/aria2"

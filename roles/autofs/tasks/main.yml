@@ -1,4 +1,16 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ autofs_packages }}"
+
 - name: Create the '/etc/autofs' directory if not exists
   ansible.builtin.file:
     path: "/etc/autofs"
@@ -16,7 +28,7 @@
   loop:
     - auto.master
     - auto.lunar
-
+  notify: restart autofs
 
 - name: Create the '/etc/creds' directory if not exists
   ansible.builtin.file:
@@ -39,9 +51,4 @@
     loop_var: credential
   no_log: true
   become: true
-
-- name: Restart autofs
-  ansible.builtin.service:
-    name: autofs
-    state: restarted
-  become: true
+  notify: restart autofs

@@ -43,6 +43,24 @@
     refreshmaster = !git fetch origin && git reset --hard origin/$(git remote show origin | awk '/HEAD branch/ {print $NF}')
     wipe = clean -fd
     wipex = clean -xfd
+    delete-all-tags = "!f() { git tag -l | xargs -r git tag -d; }; f"
+    delete-all-tags-remote = "!f() { \
+        git tag -l | xargs -r git tag -d; \
+        git tag -l | xargs -r -I {} git push origin :refs/tags/{}; \
+    }; f"
+    nuke-tags = "!git tag -l | xargs -r -I {} git push origin :refs/tags/{} && git tag -l | xargs -r git tag -d"
+    delete-all-releases = "!f() { \
+        gh release list --limit 1000 --json tagName -q '.[].tagName' | \
+        xargs -r -I {} gh release delete {} -y; \
+    }; f"
+    nuke-releases = "!f() { \
+        gh release list --limit 1000 --json tagName -q '.[].tagName' | \
+        while read tag; do \
+            gh release delete \"$tag\" -y; \
+            git push origin :refs/tags/$tag; \
+            git tag -d \"$tag\" 2>/dev/null; \
+        done; \
+    }; f"
 
 [credential]
 	helper = cache
@@ -58,3 +76,17 @@
 
 [includeIf "gitdir:~/Work/"]
   path = ./config-work
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential

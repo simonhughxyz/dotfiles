@@ -1,4 +1,33 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ fontconfig_packages }}"
+  notify: rebuild font cache
+
+- name: Install nerd font from GitHub
+  when: fontconfig_packages | length == 0
+  block:
+    - name: Create user font directory
+      ansible.builtin.file:
+        path: "{{ home }}/.local/share/fonts"
+        state: directory
+        mode: "0755"
+
+    - name: Download nerd font
+      ansible.builtin.unarchive:
+        src: "{{ fontconfig_nerd_font_url }}"
+        dest: "{{ home }}/.local/share/fonts"
+        remote_src: true
+      notify: rebuild font cache
+
 - name: Create the '$HOME/.config/fontconfig' directory if not exists
   ansible.builtin.file:
     path: "{{ home }}/.config/fontconfig"
@@ -13,3 +42,4 @@
     force: yes
   loop:
     - fonts.conf
+  notify: rebuild font cache

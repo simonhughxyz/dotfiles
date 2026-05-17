@@ -1,4 +1,16 @@
 ---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ nvim_packages }}"
+
 - name: Stash current changes if any
   command: git stash push -m "Stashed by ansible dotfiles"
   args:
@@ -13,6 +25,7 @@
     dest: "{{ home }}/.config/nvim"
     version: "master"
     update: yes
+    accept_hostkey: yes
 
 - name: Ensure lua folder is deleted
   ansible.builtin.file:

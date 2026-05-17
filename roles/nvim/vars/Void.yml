@@ -1,0 +1,4 @@
+---
+nvim_packages:
+  - neovim
+  - neovim-remote

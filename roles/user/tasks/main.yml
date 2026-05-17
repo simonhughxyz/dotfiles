@@ -1,0 +1,61 @@
+---
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ user_packages }}"
+
+- name: Create user account
+  become: true
+  become_user: root
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    uid: "{{ user.uid | default(omit) }}"
+    shell: "{{ user.shell | default('/bin/bash') }}"
+    groups: "{{ user.groups | default(omit) }}"
+    create_home: true
+    state: present
+
+- name: Configure passwordless sudo
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    content: "{{ user.name }} ALL=(ALL) NOPASSWD: ALL\n"
+    dest: "/etc/sudoers.d/{{ user.name }}"
+    mode: "0440"
+    validate: "visudo -cf %s"
+  when: user.sudo | default(false) | bool
+
+- name: Deploy SSH keypair
+  become: true
+  become_user: root
+  when: user_secret.ssh is defined
+  block:
+    - name: Create .ssh directory
+      ansible.builtin.file:
+        path: "/home/{{ user.name }}/.ssh"
+        state: directory
+        owner: "{{ user.name }}"
+        mode: "0700"
+
+    - name: Deploy SSH private key
+      ansible.builtin.copy:
+        content: "{{ user_secret.ssh.private_key }}"
+        dest: "/home/{{ user.name }}/.ssh/id_ed25519"
+        owner: "{{ user.name }}"
+        mode: "0600"
+      no_log: true
+
+    - name: Deploy SSH public key
+      ansible.builtin.copy:
+        content: "{{ user_secret.ssh.public_key }}"
+        dest: "/home/{{ user.name }}/.ssh/id_ed25519.pub"
+        owner: "{{ user.name }}"
+        mode: "0644"
+      no_log: true
