@@ -1,0 +1,45 @@
+zsh_plugins_dir: "{{ home }}/.local/share/zsh/plugins"
+zsh_plugin_config: "{{ home }}/.local/share/zsh/plugin-list.zsh"
+
+zsh_plugins:
+  - name: zsh-autosuggestions
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    version: v0.7.0
+    source: zsh-autosuggestions.zsh
+    fpath: null
+    lazy: true
+
+  - name: fast-syntax-highlighting
+    repo: https://github.com/zdharma-continuum/fast-syntax-highlighting.git
+    version: HEAD
+    source: fast-syntax-highlighting.plugin.zsh
+    fpath: null
+    lazy: false
+
+  - name: zsh-completions
+    repo: https://github.com/zsh-users/zsh-completions.git
+    version: HEAD
+    source: zsh-completions.plugin.zsh
+    fpath: src
+    lazy: false
+
+  - name: jq-zsh-plugin
+    repo: https://github.com/reegnz/jq-zsh-plugin.git
+    version: HEAD
+    source: jq.plugin.zsh
+    fpath: null
+    lazy: false
+
+  - name: zsh-autocomplete
+    repo: https://github.com/marlonrichert/zsh-autocomplete.git
+    version: HEAD
+    source: zsh-autocomplete.plugin.zsh
+    fpath: null
+    lazy: false
+
+  - name: zsh-history-substring-search
+    repo: https://github.com/zsh-users/zsh-history-substring-search.git
+    version: HEAD
+    source: zsh-history-substring-search.zsh
+    fpath: null
+    lazy: false
