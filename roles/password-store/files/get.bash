@@ -64,7 +64,9 @@ get() {
     local field="$1" file="$2"
     case "$field" in
         pass)
-            pass show "$file" | head -n 1
+            # Everything above the `---` separator. Falls back to the whole
+            # file if no separator is present.
+            pass show "$file" | awk '/^---$/{exit} {print}'
             ;;
         *)
             local yaml
