@@ -1,9 +1,7 @@
 #!/bin/sh
 
 # ALIAS
-# Simon Hugh Moore
-#
-# Defines all my shell aliases to use.
+# Defines all shell aliases to use.
 
 alias gconf='git --git-dir=$HOME/.git/ --work-tree=$HOME'
 

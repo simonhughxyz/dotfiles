@@ -1,7 +1,6 @@
 # pyright: reportUndefinedVariable = false
 #
 # Qutebrowser Config
-# Simon H Moore <simon@simonhugh.xyz>
 
 import datetime
 import os
