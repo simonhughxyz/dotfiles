@@ -24,3 +24,16 @@
     update: false
     accept_hostkey: yes
   when: not password_store_git.stat.exists
+
+- name: Ensure password-store extensions directory exists
+  ansible.builtin.file:
+    path: "{{ home }}/.config/password-store/.extensions"
+    state: directory
+    mode: u=rwx,g=,o=
+
+- name: Deploy pass menu extension
+  ansible.builtin.copy:
+    src: menu.bash
+    dest: "{{ home }}/.config/password-store/.extensions/menu.bash"
+    mode: u=rwx,g=,o=
+    force: yes
