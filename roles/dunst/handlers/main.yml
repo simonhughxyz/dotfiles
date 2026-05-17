@@ -1,0 +1,5 @@
+---
+- name: reload dunst
+  ansible.builtin.command: pkill -SIGUSR2 dunst
+  failed_when: false
+  changed_when: false

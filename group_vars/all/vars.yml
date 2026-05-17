@@ -1,0 +1,49 @@
+user:
+  name: simon
+  uid: 1000
+  shell: /usr/bin/zsh
+  sudo: true
+  roles:
+    - shell
+    - git
+    - nvim
+    - password-store
+    - starship
+    - fontconfig
+    - aria2
+
+is_gui: true
+
+packages:
+  linux:
+    - curl
+    - fzf
+    - jq
+    - bottom
+    - htop
+    - aria2
+    - neovim
+    - pass
+    - starship
+    - autofs
+
+  GUI:
+    linux:
+      - qutebrowser
+      - niri
+      - waybar
+      - dunst
+      - mpv
+      - zathura
+      - zathura-pdf-mupdf
+      - zathura-ps
+
+
+git:
+  email: simon@simonhugh.xyz
+  name: Simon H Moore
+  username: simonhughxyz
+  work:
+    email: simon.moore@audiebant.co.uk
+    name: Simon H Moore
+    username: simonhughxyz

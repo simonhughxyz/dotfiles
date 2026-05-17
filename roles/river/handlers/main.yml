@@ -1,0 +1,5 @@
+---
+- name: reload river
+  ansible.builtin.command: riverctl reload
+  failed_when: false
+  changed_when: false

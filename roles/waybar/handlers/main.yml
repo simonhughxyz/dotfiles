@@ -1,0 +1,5 @@
+---
+- name: reload waybar
+  ansible.builtin.command: pkill -SIGUSR2 waybar
+  failed_when: false
+  changed_when: false
