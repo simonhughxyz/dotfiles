@@ -12,7 +12,8 @@ FZF_DEFAULT_OPTS_OLD="$FZF_DEFAULT_OPTS"
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --expect='return,alt-p,alt-c,alt-t,alt-n,alt-q,alt-u,alt-g,alt-f' \
   --preview='pass show {} 2>/dev/null' \
-  --preview-window='right:60%:wrap' \
+  --preview-window='right:60%:wrap:hidden' \
+  --bind='alt-v:toggle-preview' \
   --bind='alt-e:execute(pass edit {})+abort'"
 
 mkdir -p $RUNTIME
