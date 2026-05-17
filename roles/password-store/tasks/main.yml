@@ -39,4 +39,5 @@
     force: yes
   loop:
     - menu.bash
-    - yaml-select.bash
+    - choose.bash
+    - get.bash
