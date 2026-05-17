@@ -38,7 +38,7 @@ printf "%s\n" "$file" >> $LASTPASS
 
 FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS_OLD
 case "$key" in
-    return)  pass choose "$file" ;;
+    return)  pass yaml-select "$file" ;;
     alt-p) pass get -p pass "$file" ;;
     alt-c) pass get -c pass "$file" ;;
     alt-t) pass get -t pass "$file" ;;

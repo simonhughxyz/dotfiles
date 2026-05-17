@@ -31,9 +31,12 @@
     state: directory
     mode: u=rwx,g=,o=
 
-- name: Deploy pass menu extension
+- name: Deploy pass extension scripts
   ansible.builtin.copy:
-    src: menu.bash
-    dest: "{{ home }}/.config/password-store/.extensions/menu.bash"
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/password-store/.extensions/{{ item }}"
     mode: u=rwx,g=,o=
     force: yes
+  loop:
+    - menu.bash
+    - yaml-select.bash
