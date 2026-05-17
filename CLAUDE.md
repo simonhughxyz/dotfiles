@@ -24,13 +24,13 @@ Vault password comes from `vault.sh` (which runs `pass pass`); this is wired int
 
 ```bash
 # Full apply (GUI + CLI), local machine
-ansible-playbook dotfiles.yml
+ansible-playbook playbook.yml
 
 # CLI-only apply (skips niri/waybar/dunst/zathura/mpv/autofs)
-ansible-playbook cli.yml
+ansible-playbook playbook.yml --skip-tags system
 
-# Disable GUI roles even with dotfiles.yml
-ansible-playbook dotfiles.yml -e "is_gui=false"
+# Disable GUI roles only (keeps autofs and other non-GUI system roles)
+ansible-playbook playbook.yml -e "is_gui=false"
 
 # Edit encrypted vault
 ansible-vault edit group_vars/all/vault.yml
@@ -42,13 +42,13 @@ Every role include is tagged with the role name. Categories: `bootstrap`, `syste
 
 ```bash
 # Just re-deploy starship for all users (skip user-create + system roles)
-ansible-playbook cli.yml --tags starship --skip-tags bootstrap
+ansible-playbook playbook.yml --tags starship --skip-tags bootstrap
 
 # Re-deploy all GUI roles only
-ansible-playbook dotfiles.yml --tags gui
+ansible-playbook playbook.yml --tags gui
 
 # Re-run autofs only
-ansible-playbook dotfiles.yml --tags autofs --skip-tags bootstrap
+ansible-playbook playbook.yml --tags autofs --skip-tags bootstrap
 ```
 
 The bootstrap play is tagged `bootstrap` so `--skip-tags bootstrap` is the default for iterative tweaks.
@@ -57,13 +57,11 @@ The bootstrap play is tagged `bootstrap` so `--skip-tags bootstrap` is the defau
 
 ### Playbook layering
 
-`dotfiles.yml` runs three plays in order:
+`playbook.yml` runs three plays in order:
 
 1. **Bootstrap** (tag `bootstrap`) — runs the `user` role as root: installs base packages, creates the user from `user:` in `group_vars/all/vars.yml`, configures passwordless sudo, and (if `user_secret` is provided from vault) drops the SSH keypair.
 2. **User roles** — iterates `user.roles` and runs each role with `become_user: {{ user.name }}` and `home: /home/{{ user.name }}`. Each role's tasks are tagged with the role name at runtime via `apply.tags`, so `--tags <role>` filters to just that role.
-3. **System roles** (tag `system`, plus `gui` for GUI ones) — niri, waybar, dunst, zathura, mpv (gated on `is_gui`), and autofs. Run as root with `home: /home/{{ user.name }}`.
-
-`cli.yml` is plays 1 and 2 only — no system-scoped GUI work.
+3. **System roles** (tag `system`, plus `gui` for GUI ones) — niri, waybar, dunst, zathura, mpv (gated on `is_gui`), and autofs. Run as root with `home: /home/{{ user.name }}`. Skip the whole group with `--skip-tags system` for a CLI-only apply.
 
 ### Role conventions
 
@@ -77,8 +75,8 @@ When adding a new role:
 - Create `roles/<name>/tasks/main.yml`, `roles/<name>/vars/Void.yml`, and `roles/<name>/vars/RedHat.yml` (plus any other distros you target). Each must define `<name>_packages` even if empty.
 - For service/daemon-reload behaviour, add `roles/<name>/handlers/main.yml` and `notify:` from the config-deploy task.
 - For tunable knobs, use `roles/<name>/defaults/main.yml`; reserve `vars/` for distro-specific facts only.
-- For a per-user role, add its name to `user.roles` in `group_vars/all/vars.yml` rather than wiring it into `dotfiles.yml`.
-- For a system/GUI role, add it to `dotfiles.yml` with `tags: [system, gui, <name>]` (drop `gui` if not GUI) and the appropriate `when:` guard.
+- For a per-user role, add its name to `user.roles` in `group_vars/all/vars.yml` rather than wiring it into `playbook.yml`.
+- For a system/GUI role, add it to `playbook.yml` with `tags: [system, gui, <name>]` (drop `gui` if not GUI) and the appropriate `when:` guard.
 
 ### Variables and secrets
 
