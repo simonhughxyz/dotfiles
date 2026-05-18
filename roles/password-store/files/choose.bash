@@ -1,17 +1,21 @@
 #!/bin/bash
 #
-# CHOOSE — pick a field in a YAML-format pass file, dispatch to `pass get`.
+# CHOOSE — pick a field path in a YAML-format pass file, drilling into
+# arrays when needed, then dispatch to `pass get`.
 #
 # Expected file format:
 #   <password>
 #   ---
 #   <yaml document>
 #
-# fzf surfaces 'pass' (line 1) plus every scalar leaf in the yaml as a
-# dotted jq path. Selecting one + a key combo shells out to `pass get`.
+# At the top level fzf shows `pass` (the password section) plus every
+# scalar leaf and array as a dotted jq path. Picking an array with Enter
+# opens a sub-menu of its items (`N: value`); the loop repeats until the
+# selection is a scalar (or an action key is pressed).
 #
 # Keys:
-#   <enter>     copy (default for non-url fields) / open url (if field is 'url')
+#   <enter>     for scalar: default action (copy / open url)
+#               for array:  drill into items
 #   alt-p       print
 #   alt-c       clip
 #   alt-t       type
@@ -25,8 +29,7 @@
 FILE="$1"
 
 yaml="$(pass show "$FILE" | awk 'f; /^---$/ {f=1}')"
-# Walk the yaml, treating arrays as leaves so a "Backup Codes" list shows up
-# as one entry instead of Backup Codes.0, .1, … . Nested mappings recurse.
+
 paths="$(printf '%s\n' "$yaml" | yq -r '
   def leafpaths:
     if type == "object" then to_entries[] | [.key] + (.value | leafpaths)
@@ -34,17 +37,52 @@ paths="$(printf '%s\n' "$yaml" | yq -r '
   leafpaths | join(".")
 ' 2>/dev/null | awk 'NF')"
 
+# Build a jq path expression from a dotted field name. Numeric segments
+# become array indices; segments with special chars get quoted.
+jq_path_of() {
+    local field="$1" expr="" seg
+    local IFS=.
+    for seg in $field; do
+        if [[ "$seg" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]]; then
+            expr+=".$seg"
+        elif [[ "$seg" =~ ^[0-9]+$ ]]; then
+            expr+="[$seg]"
+        else
+            expr+=".\"$seg\""
+        fi
+    done
+    printf '%s' "$expr"
+}
+
 FZF_DEFAULT_OPTS_OLD="$FZF_DEFAULT_OPTS"
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --expect='return,alt-p,alt-c,alt-t,alt-n,alt-q,alt-P,alt-C,alt-T,alt-N,alt-Q,alt-u,alt-g,alt-f'"
 
 choice="$(printf 'pass\n%s' "$paths" | fzf --prompt "$FILE > ")"
-FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS_OLD"
-
 [ -z "$choice" ] && exit 0
 key="$(printf '%s' "$choice"   | sed -n 1p)"
 field="$(printf '%s' "$choice" | sed -n 2p)"
 [ -z "$field" ] && exit 0
+
+# Drill into arrays as long as Enter is pressed.
+while [ -z "$key" ] && [ "$field" != "pass" ]; do
+    jqp="$(jq_path_of "$field")"
+    type="$(printf '%s\n' "$yaml" | yq -r "$jqp | type" 2>/dev/null)"
+    [ "$type" != "array" ] && break
+
+    items="$(printf '%s\n' "$yaml" | yq -r \
+        "$jqp | to_entries | .[] | \"\(.key): \(.value | tostring)\"" 2>/dev/null)"
+    choice="$(printf '%s\n' "$items" | fzf --prompt "$FILE > $field > ")"
+    [ -z "$choice" ] && exit 0
+    key="$(printf '%s' "$choice"   | sed -n 1p)"
+    sel="$(printf '%s' "$choice"   | sed -n 2p)"
+    [ -z "$sel" ] && exit 0
+
+    idx="${sel%%:*}"
+    field="$field.$idx"
+done
+
+FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS_OLD"
 
 open_default() {
     case "$field" in
@@ -54,7 +92,7 @@ open_default() {
 }
 
 case "$key" in
-    return) open_default ;;
+    return|"") open_default ;;
     alt-p)  pass get -ip  "$field" "$FILE" ;;
     alt-c)  pass get -ic  "$field" "$FILE" ;;
     alt-t)  pass get -it  "$field" "$FILE" ;;
