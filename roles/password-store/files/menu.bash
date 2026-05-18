@@ -14,7 +14,7 @@ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --preview='pass show {} 2>/dev/null' \
   --preview-window='right:60%:wrap:hidden' \
   --bind='alt-v:toggle-preview' \
-  --bind='alt-e:execute(pass edit {})+abort'"
+  --bind='alt-e:execute(pass edit {})'"
 
 mkdir -p $RUNTIME
 
