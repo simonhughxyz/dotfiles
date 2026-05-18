@@ -65,7 +65,7 @@ field="$(printf '%s' "$choice" | sed -n 2p)"
 [ -z "$field" ] && exit 0
 
 # Drill into arrays as long as Enter is pressed.
-while [ -z "$key" ] && [ "$field" != "pass" ]; do
+while { [ -z "$key" ] || [ "$key" = "return" ]; } && [ "$field" != "pass" ]; do
     jqp="$(jq_path_of "$field")"
     type="$(printf '%s\n' "$yaml" | yq -r "$jqp | type" 2>/dev/null)"
     [ "$type" != "array" ] && break
