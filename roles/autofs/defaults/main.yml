@@ -3,5 +3,5 @@ etc:
   credentials:
     - name: lunar.simon
       username: simon
-      password: "{{ lookup('pipe', 'pass network/mo-net.lan/simon') }}"
+      password: "{{ lookup('pipe', 'pass get pass network/mo-net.lan/simon') }}"
       domain: monet.lan
