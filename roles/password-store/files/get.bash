@@ -59,7 +59,22 @@ nth() {
     printf '%s' "$value" | cut -c "$spec"
 }
 
-# yaml-aware retrieval
+# Build a jq path from a dotted field name, quoting segments with special
+# chars (spaces, hyphens, …) so that ".Backup Codes" becomes ."Backup Codes".
+jq_path_of() {
+    local field="$1" expr="" seg
+    local IFS=.
+    for seg in $field; do
+        if [[ "$seg" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]]; then
+            expr+=".$seg"
+        else
+            expr+=".\"$seg\""
+        fi
+    done
+    printf '%s' "$expr"
+}
+
+# yaml-aware retrieval. Array values are unwrapped to newline-separated items.
 get() {
     local field="$1" file="$2"
     case "$field" in
@@ -69,9 +84,10 @@ get() {
             pass show "$file" | awk '/^---$/{exit} {print}'
             ;;
         *)
-            local yaml
+            local yaml expr
             yaml="$(pass show "$file" | awk 'f; /^---$/ {f=1}')"
-            printf '%s\n' "$yaml" | yq -r ".$field // empty" 2>/dev/null
+            expr="$(jq_path_of "$field")"
+            printf '%s\n' "$yaml" | yq -r "$expr | if type == \"array\" then .[] else . end // empty" 2>/dev/null
             ;;
     esac
 }

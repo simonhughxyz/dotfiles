@@ -25,7 +25,14 @@
 FILE="$1"
 
 yaml="$(pass show "$FILE" | awk 'f; /^---$/ {f=1}')"
-paths="$(printf '%s\n' "$yaml" | yq -r 'paths(scalars) | join(".")' 2>/dev/null | awk 'NF')"
+# Walk the yaml, treating arrays as leaves so a "Backup Codes" list shows up
+# as one entry instead of Backup Codes.0, .1, … . Nested mappings recurse.
+paths="$(printf '%s\n' "$yaml" | yq -r '
+  def leafpaths:
+    if type == "object" then to_entries[] | [.key] + (.value | leafpaths)
+    else [] end;
+  leafpaths | join(".")
+' 2>/dev/null | awk 'NF')"
 
 FZF_DEFAULT_OPTS_OLD="$FZF_DEFAULT_OPTS"
 FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
